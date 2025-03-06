@@ -190,7 +190,7 @@ export default function QuestionList({
       <QuestionsHeader text="Questions" />
       <div className="border-x">
         {questions.map(
-          ({ id, status, topicName, difficulty, isSaved }, index) => {
+          ({ id, qNo, status, topicName, difficulty, isSaved }) => {
             const StatusIcon = getStatusIcon(status);
 
             // Define colors statically
@@ -236,7 +236,7 @@ export default function QuestionList({
                   {/* Topic */}
                   <div className="sm:w-[calc(100%-97.28px+4rem)]">
                     <div className="w-fit flex items-cente">
-                      <span className="mr-1 font-medium">{index + 1}.</span>
+                      <span className="mr-1 font-medium">{qNo}.</span>
                       <Link
                         href={`/pages/questions/${id}`}
                         className=" text-blue-600 underline"
