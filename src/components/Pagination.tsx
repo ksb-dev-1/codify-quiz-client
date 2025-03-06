@@ -34,7 +34,7 @@ const Pagination = ({
     <div className="flex items-center justify-center mt-8">
       {questionsLoading ? (
         <div className="text-transparent">
-          <button className="skeleton px-4 py-2 mx-1 border border-transparent rounded-custom">
+          <button className="skeleton px-4 py-2 mr-1 border border-transparent rounded-custom">
             Prev
           </button>
           {[1, 2, 3].map((_, index) => (
@@ -45,7 +45,7 @@ const Pagination = ({
               {index}
             </button>
           ))}
-          <button className="skeleton px-4 py-2 mx-1 border border-transparent rounded-custom">
+          <button className="skeleton px-4 py-2 ml-1 border border-transparent rounded-custom">
             Next
           </button>
         </div>
@@ -58,7 +58,7 @@ const Pagination = ({
               currentPage === 1
                 ? "cursor-not-allowed text-[#999]"
                 : "cursor-pointer bg-primary text-white hover:bg-hover transition-colors"
-            } border px-4 py-2 mx-1 rounded-custom`}
+            } border px-4 py-2 mr-1 rounded-custom`}
           >
             Prev
           </button>
@@ -82,7 +82,7 @@ const Pagination = ({
               currentPage === totalPages
                 ? "cursor-not-allowed text-[#999]"
                 : "cursor-pointer bg-primary text-white hover:bg-hover transition-colors"
-            } border px-4 py-2 mx-1 rounded-custom`}
+            } border px-4 py-2 ml-1 rounded-custom`}
           >
             Next
           </button>
