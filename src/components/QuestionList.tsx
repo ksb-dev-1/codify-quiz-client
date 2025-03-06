@@ -238,7 +238,7 @@ export default function QuestionList({
                     <div className="w-fit flex items-cente">
                       <span className="mr-1 font-medium">{index + 1}.</span>
                       <Link
-                        href={`/questions/${id}`}
+                        href={`/pages/questions/${id}`}
                         className=" text-blue-600 underline"
                       >
                         {topicName}
