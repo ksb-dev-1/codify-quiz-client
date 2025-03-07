@@ -1,36 +1,42 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 
 export default async function saveQuestionAction(formData: FormData) {
   const session = await auth();
   const userId = session?.user?.id;
 
-  if (!userId) throw new Error("Unauthorized");
-
-  const questionID = formData.get("questionID") as string;
-  if (!questionID) throw new Error("Invalid question ID");
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/questions/${questionID}/save`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "force-cache",
-    }
-  );
-
-  if (!response.ok) {
-    const jsonResponse = await response.json();
-    throw new Error(jsonResponse.message);
+  if (!userId) {
+    return { success: false, message: "Unauthorized" };
   }
 
-  revalidatePath("/pages/questions", "page");
-  revalidatePath(`/pages/question/${questionID}`, "page");
-  revalidatePath("/pages/saved", "page");
+  const questionId = formData.get("questionId") as string;
+  if (!questionId) {
+    return { success: false, message: "Invalid question ID" };
+  }
 
-  return response.json();
+  try {
+    // Check if already saved
+    const existingSaved = await prisma.savedQuestion.findFirst({
+      where: { questionId, userId },
+    });
+
+    if (existingSaved) {
+      return { success: false, message: "Question is already saved" };
+    }
+
+    // Save question
+    await prisma.savedQuestion.create({
+      data: { questionId, userId },
+    });
+
+    return { success: true, message: "Question saved successfully" };
+  } catch (error) {
+    console.error("Failed to save question:", error);
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Internal server error",
+    };
+  }
 }

@@ -9,29 +9,55 @@ import { getStatusIcon } from "@/constants/statuses";
 // types
 import { Question } from "@/types/types";
 
+// lib
+import fetchSavedQuestions from "@/lib/fetchSavedQuestions";
+
 // components
 import QuestionListSkeleton from "@/components/skeletons/QuestionListSkeleton";
 import QuestionsHeader from "@/components/shared/QuestionsHeader";
 import SaveRemoveButton from "./SaveRemoveButton";
 
-interface QuestionListProps {
-  questionsLoading: boolean;
-  questionsError: boolean;
-  questions: Question[];
-  isFilterApplied: boolean;
+// 3rd party
+import { useQuery } from "@tanstack/react-query";
+
+interface SavedQuestionListProps {
+  savedQuestionsLoading: boolean;
+  savedQuestionsError: boolean;
+  savedQuestions: Question[];
 }
 
-export default function QuestionList({
-  questionsLoading,
-  questionsError,
-  questions,
-  isFilterApplied,
-}: QuestionListProps) {
-  const [optimisticQuestions, setOptimisticQuestions] = useState(questions);
+export default function SavedQuestionListWrapper({
+  userId,
+}: {
+  userId: string;
+}) {
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["saved-questions", userId],
+    queryFn: () => fetchSavedQuestions(userId),
+  });
+
+  const savedQuestions = data?.savedQuestions || [];
+
+  return (
+    <SavedQuestionList
+      savedQuestionsLoading={isLoading}
+      savedQuestionsError={isError}
+      savedQuestions={savedQuestions}
+    />
+  );
+}
+
+function SavedQuestionList({
+  savedQuestionsLoading,
+  savedQuestionsError,
+  savedQuestions,
+}: SavedQuestionListProps) {
+  const [optimisticQuestions, setOptimisticQuestions] =
+    useState(savedQuestions);
 
   useEffect(() => {
-    setOptimisticQuestions(questions);
-  }, [questions]); // 🔥 Updates state whenever `questions` prop changes
+    setOptimisticQuestions(savedQuestions);
+  }, [savedQuestions]); // 🔥 Updates state whenever `savedQuestions` prop changes
 
   const handleSave = (questionID: string) => {
     setOptimisticQuestions((prev) =>
@@ -45,37 +71,29 @@ export default function QuestionList({
     );
   };
 
-  if (questionsLoading || optimisticQuestions.length === 0) {
+  if (savedQuestionsLoading || optimisticQuestions.length === 0) {
     return <QuestionListSkeleton text="Questions" marginTop="mt-8" />;
   }
 
-  if (questionsError) {
+  if (savedQuestionsError) {
     return (
       <p className="mt-8 text-center text-red-600 text-xl">
-        Failed to fetch questions! Refresh the page or check your internet
+        Failed to fetch saved questions! Refresh the page or check your internet
         connection.
       </p>
     );
   }
 
-  if (optimisticQuestions.length === 0 && !isFilterApplied) {
-    return <p className="text-xl mt-8">No questions found!</p>;
-  }
-
-  if (optimisticQuestions.length === 0 && isFilterApplied) {
-    return (
-      <p className="text-xl mt-8">
-        No questions found! Try using different filters.
-      </p>
-    );
+  if (optimisticQuestions.length === 0) {
+    return <p className="text-xl mt-8">No saved questions found!</p>;
   }
 
   return (
     <div className="mt-8">
-      <QuestionsHeader text="Questions" />
+      <QuestionsHeader text="Saved Questions" />
       <div className="border-x">
         {optimisticQuestions.map(
-          ({ id, qNo, status, topicName, difficulty, isSaved }) => {
+          ({ id, qNo, status, topicName, difficulty }) => {
             const StatusIcon = getStatusIcon(status);
 
             // Define colors statically
@@ -143,7 +161,7 @@ export default function QuestionList({
 
                   <SaveRemoveButton
                     questionId={id}
-                    isSaved={isSaved}
+                    isSaved={true}
                     onSave={handleSave}
                     onRemove={handleRemove}
                   />

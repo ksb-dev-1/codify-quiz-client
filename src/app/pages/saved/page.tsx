@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 
 // components
 import Container from "@/components/shared/Container";
+import SavedQuestionList from "@/components/SavedQuestionList";
 
 export const metadata: Metadata = {
   title: "Saved",
@@ -19,5 +20,9 @@ export default async function SavedPage() {
   // If user not signed in redirect to signin page
   if (!userId) redirect("/pages/signin");
 
-  return <Container>Saved Page</Container>;
+  return (
+    <Container>
+      <SavedQuestionList userId={userId} />
+    </Container>
+  );
 }

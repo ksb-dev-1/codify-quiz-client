@@ -16,6 +16,7 @@ export default async function fetchQuestions(
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL
   }/api/questions?${queryParams.toString()}`;
+
   const res = await fetch(url, {
     method: "GET",
     headers: {

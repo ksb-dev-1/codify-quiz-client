@@ -1,10 +1,11 @@
-export default async function fetchTopics(userId: string) {
+export default async function fetchQuestions(userId: string) {
   const queryParams = new URLSearchParams();
+
   queryParams.set("userId", userId);
 
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL
-  }/api/topics?${queryParams.toString()}`;
+  }/api/questions/saved?${queryParams.toString()}`;
 
   const res = await fetch(url, {
     method: "GET",
@@ -14,7 +15,7 @@ export default async function fetchTopics(userId: string) {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch topics");
+    throw new Error("Failed to fetch saved questions");
   }
 
   return res.json();

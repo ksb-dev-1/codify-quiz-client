@@ -1,36 +1,42 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 
 export default async function removeQuestionAction(formData: FormData) {
   const session = await auth();
   const userId = session?.user?.id;
 
-  if (!userId) throw new Error("Unauthorized");
-
-  const questionID = formData.get("questionID") as string;
-  if (!questionID) throw new Error("Invalid question ID");
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/questions/${questionID}/remove`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "force-cache",
-    }
-  );
-
-  if (!response.ok) {
-    const jsonResponse = await response.json();
-    throw new Error(jsonResponse.message);
+  if (!userId) {
+    return { success: false, message: "Unauthorized" };
   }
 
-  revalidatePath("/pages/questions", "page");
-  revalidatePath(`/pages/question/${questionID}`, "page");
-  revalidatePath("/pages/saved", "page");
+  const questionId = formData.get("questionId") as string;
+  if (!questionId) {
+    return { success: false, message: "Invalid question ID" };
+  }
 
-  return response.json();
+  try {
+    // Check if the question exists
+    const existingSaved = await prisma.savedQuestion.findFirst({
+      where: { questionId, userId },
+    });
+
+    if (!existingSaved) {
+      return { success: false, message: "Question is not saved" };
+    }
+
+    // Remove the saved question
+    await prisma.savedQuestion.delete({
+      where: { id: existingSaved.id },
+    });
+
+    return { success: true, message: "Question removed successfully" };
+  } catch (error) {
+    console.error("Failed to remove question:", error);
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Internal server error",
+    };
+  }
 }
