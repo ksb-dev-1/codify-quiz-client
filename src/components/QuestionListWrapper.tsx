@@ -23,7 +23,7 @@ interface QuestionsProps {
   currentTopic: string | undefined;
 }
 
-export default function Questions({
+export default function QuestionListWrapper({
   userId,
   currentPage,
   currentStatus,

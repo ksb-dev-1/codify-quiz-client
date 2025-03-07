@@ -12,7 +12,10 @@ export default function GoogleSignInButton() {
   return (
     <button
       type="submit"
-      className="relative w-full px-4 h-[60px] border bg-white text-black hover:bg-slate-200 rounded-custom flex items-center justify-center"
+      disabled={pending}
+      className={`relative w-full px-4 h-[60px] border bg-white ${
+        pending ? "cursor-not-allowed" : "hover:bg-slate-200"
+      } text-black rounded-custom flex items-center justify-center`}
     >
       <FcGoogle className="text-2xl" />
       <span className="ml-4">Sign in with Google</span>

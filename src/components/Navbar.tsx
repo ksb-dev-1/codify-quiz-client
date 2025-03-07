@@ -153,7 +153,7 @@ export default function Navbar() {
                 className="flex items-center px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
               >
                 <FiLogOut className="mr-4" />
-                Sign out
+                Logout
               </button>
             </div>
           </div>
@@ -171,6 +171,7 @@ export default function Navbar() {
             isSideNavOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           } transition-opacity duration-300 fixed top-0 left-0 right-0 bottom-0 bg-[rgb(0,30,43,0.5)] z-20`}
         >
+          {/* Close Button */}
           <div className="absolute top-4 right-4 h-10 w-10 rounded-custom cursor-pointer bg-primary text-white hover:bg-hover transition-colors">
             <IoClose
               onClick={() => setIsSideNavOpen(false)}
@@ -185,7 +186,7 @@ export default function Navbar() {
             } absolute top-0 left-0 bottom-0 w-52 bg-white transition-transform duration-300 z-30`}
           >
             <div className="flex flex-col h-full">
-              <div className="w-full border-b h-[72px] flex flex-col items-start justify-center pl-4">
+              <div className="w-full border-b h-[72px] flex items-center justify-start pl-4">
                 <Link
                   href="/"
                   onClick={() => setIsSideNavOpen(false)}
@@ -194,7 +195,7 @@ export default function Navbar() {
                   {title}
                 </Link>
               </div>
-              <div className="flex flex-col items-start mt-8 px-4 space-y-2 text-xl">
+              <div className="flex flex-col items-start mt-4 px-4 space-y-2 text-xl">
                 <Link
                   href="/pages/questions?page=1"
                   onClick={() => setIsSideNavOpen(false)}

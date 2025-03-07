@@ -85,7 +85,7 @@ export default function QuestionList({
   return (
     <div className="mt-8">
       <QuestionsHeader text="Questions" />
-      <div>
+      <div className="border-x">
         {optimisticQuestions.map(
           ({ id, qNo, status, topicName, difficulty, isSaved }) => {
             const StatusIcon = getStatusIcon(status);
@@ -115,7 +115,7 @@ export default function QuestionList({
             return (
               <div
                 key={id}
-                className="w-full my-4 rounded-custom border p-4 sm:p-6 flex flex-row justify-between sm:justify-normal"
+                className="w-full border-b p-4 sm:p-6 flex flex-row justify-between sm:justify-normal"
               >
                 <div className="w-full sm:w-[calc(100%-97.27px+3rem+87.38px+2rem)] flex sm:items-center flex-col-reverse sm:flex-row justify-between sm:justify-normal">
                   {/* Status */}

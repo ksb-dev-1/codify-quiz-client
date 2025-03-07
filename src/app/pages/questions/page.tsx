@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 
 // components
 import Container from "@/components/shared/Container";
-import Questions from "@/components/Questions";
+import QuestionListWrapper from "@/components/QuestionListWrapper";
 
 export const metadata: Metadata = {
   title: "Questions",
@@ -28,7 +28,7 @@ export default async function QuestionsPageWrapper({
 
   return (
     <Container>
-      <Questions
+      <QuestionListWrapper
         userId={userId}
         currentPage={page}
         currentStatus={status}
