@@ -87,7 +87,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden sm:flex skeleton h-10 w-10 rounded-full"></div>
-        <div className="flex sm:hidden skeleton h-8 w-8 rounded-custom"></div>
+        <div className="flex sm:hidden skeleton h-10 w-10 rounded-custom"></div>
       </NavbarWrapper>
     );
   }
