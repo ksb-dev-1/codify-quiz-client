@@ -45,7 +45,10 @@ export default function QuestionList({
     );
   };
 
-  if (questionsLoading || optimisticQuestions.length === 0) {
+  if (
+    (questionsLoading || optimisticQuestions.length === 0) &&
+    questions.length !== 0
+  ) {
     return <QuestionListSkeleton text="Questions" marginTop="mt-8" />;
   }
 
