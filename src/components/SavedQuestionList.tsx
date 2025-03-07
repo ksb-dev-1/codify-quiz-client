@@ -72,7 +72,7 @@ function SavedQuestionList({
   };
 
   if (savedQuestionsLoading || optimisticQuestions.length === 0) {
-    return <QuestionListSkeleton text="Questions" marginTop="mt-8" />;
+    return <QuestionListSkeleton text="Saved Questions" />;
   }
 
   if (savedQuestionsError) {
@@ -89,7 +89,7 @@ function SavedQuestionList({
   }
 
   return (
-    <div className="mt-8">
+    <div>
       <QuestionsHeader text="Saved Questions" />
       <div className="border-x">
         {optimisticQuestions.map(
