@@ -45,9 +45,14 @@ export default function QuestionList({
     );
   };
 
+  if (questionsLoading) {
+    return <QuestionListSkeleton text="Questions" marginTop="mt-8" />;
+  }
+
   if (
-    (questionsLoading || optimisticQuestions.length === 0) &&
-    questions.length !== 0
+    !questionsLoading &&
+    questions.length > 0 &&
+    optimisticQuestions.length === 0
   ) {
     return <QuestionListSkeleton text="Questions" marginTop="mt-8" />;
   }
@@ -61,7 +66,11 @@ export default function QuestionList({
     );
   }
 
-  if (optimisticQuestions.length === 0 && !isFilterApplied) {
+  if (
+    questions.length === 0 &&
+    optimisticQuestions.length === 0 &&
+    !isFilterApplied
+  ) {
     return <p className="text-xl mt-8">No questions found!</p>;
   }
 

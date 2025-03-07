@@ -7,7 +7,7 @@ import { useSaveQuestion } from "@/hooks/questions/useSaveQuestion";
 import { useRemoveQuestion } from "@/hooks/questions/useRemoveQuestion";
 
 // 3rd party
-import { Loader } from "lucide-react";
+// import { Loader } from "lucide-react";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 
 export default function SaveRemoveButton({
@@ -41,10 +41,20 @@ export default function SaveRemoveButton({
   };
 
   // Loading state
-  if (loadingId === questionId) {
+  if (loadingId === questionId && !isSaved) {
     return (
       <button className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] text-pink-600 flex justify-end">
-        <Loader className="w-5 h-5 animate-spin" />
+        {/* <Loader className="w-6 h-6 animate-spin" /> */}
+        <VscHeart className="w-6 h-6 text-pink-400 cursor-pointer" />
+      </button>
+    );
+  }
+
+  if (loadingId === questionId && isSaved) {
+    return (
+      <button className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] text-pink-600 flex justify-end">
+        {/* <Loader className="w-6 h-6 animate-spin" /> */}
+        <VscHeartFilled className="w-6 h-6 text-pink-400 cursor-pointer" />
       </button>
     );
   }
@@ -59,7 +69,7 @@ export default function SaveRemoveButton({
           disabled={loadingId === questionId}
           className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end"
         >
-          <VscHeart className="w-5 h-5 text-pink-600 cursor-pointer" />
+          <VscHeart className="w-6 h-6 text-pink-600 cursor-pointer" />
         </button>
       )}
 
@@ -71,7 +81,7 @@ export default function SaveRemoveButton({
           disabled={loadingId === questionId}
           className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end"
         >
-          <VscHeartFilled className="w-5 h-5 text-pink-600 cursor-pointer" />
+          <VscHeartFilled className="w-6 h-6 text-pink-600 cursor-pointer" />
         </button>
       )}
     </>
