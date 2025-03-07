@@ -43,7 +43,7 @@ export default function SaveRemoveButton({
   // Loading state
   if (loadingId === questionId) {
     return (
-      <button className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end">
+      <button className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] text-pink-600 flex justify-end">
         <Loader className="w-5 h-5 animate-spin" />
       </button>
     );
@@ -59,7 +59,7 @@ export default function SaveRemoveButton({
           disabled={loadingId === questionId}
           className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end"
         >
-          <VscHeart className="text-2xl text-pink-600 cursor-pointer" />
+          <VscHeart className="w-5 h-5 text-pink-600 cursor-pointer" />
         </button>
       )}
 
@@ -71,7 +71,7 @@ export default function SaveRemoveButton({
           disabled={loadingId === questionId}
           className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end"
         >
-          <VscHeartFilled className="text-2xl text-pink-600 cursor-pointer" />
+          <VscHeartFilled className="w-5 h-5 text-pink-600 cursor-pointer" />
         </button>
       )}
     </>
