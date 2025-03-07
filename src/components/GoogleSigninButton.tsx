@@ -12,11 +12,11 @@ export default function GoogleSignInButton() {
   return (
     <button
       type="submit"
-      className="w-full px-4 h-[60px] border bg-white text-black hover:bg-slate-200 rounded-custom flex items-center justify-center"
+      className="relative w-full px-4 h-[60px] border bg-white text-black hover:bg-slate-200 rounded-custom flex items-center justify-center"
     >
       <FcGoogle className="text-2xl" />
       <span className="ml-4">Sign in with Google</span>
-      {pending && <Loader2 className="ml-4 animate-spin" />}
+      {pending && <Loader2 className="absolute right-4 animate-spin" />}
     </button>
   );
 }

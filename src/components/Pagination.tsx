@@ -57,7 +57,7 @@ const Pagination = ({
             className={`${
               currentPage === 1
                 ? "cursor-not-allowed text-[#999]"
-                : "cursor-pointer bg-primary text-white hover:bg-hover transition-colors"
+                : "cursor-pointer bg-primary border-primary text-white hover:bg-hover transition-colors"
             } border px-4 py-2 mr-1 rounded-custom`}
           >
             Prev
@@ -68,7 +68,7 @@ const Pagination = ({
               onClick={() => handlePageChange(visiblePage)}
               className={`${
                 currentPage === visiblePage
-                  ? "cursor-pointer bg-primary text-white hover:bg-hover"
+                  ? "cursor-pointer bg-primary border-primary text-white hover:bg-hover"
                   : "hover:bg-slate-200"
               } border px-4 py-2 mx-1 rounded-custom transition-colors`}
             >
@@ -81,7 +81,7 @@ const Pagination = ({
             className={`${
               currentPage === totalPages
                 ? "cursor-not-allowed text-[#999]"
-                : "cursor-pointer bg-primary text-white hover:bg-hover transition-colors"
+                : "cursor-pointer bg-primary border-primary text-white hover:bg-hover transition-colors"
             } border px-4 py-2 ml-1 rounded-custom`}
           >
             Next

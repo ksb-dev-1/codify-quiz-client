@@ -8,7 +8,7 @@ export default function QuestionListSkeleton({
   return (
     <div className={marginTop}>
       <h1 className="font-semibold text-xl">{text}</h1>
-      <div className="mt-4 flex items-center justify-between sm:justify-normal px-4 sm:px-6 py-2 rounded-tl-custom rounded-tr-custom border border-primary bg-primary text-white">
+      <div className="mt-4 flex items-center justify-between sm:justify-normal px-4 sm:px-6 py-2 rounded-custom bg-primary text-white">
         <div className="sm:w-[calc(100%-97.28px+4rem+87.38px+2rem)] flex flex-col-reverse sm:flex-row sm:items-center justify-between sm:justify-normal">
           <span className="mt-6 sm:mt-0 sm:w-[calc(97.27px+3rem)] flex items-center">
             Status
@@ -26,11 +26,11 @@ export default function QuestionListSkeleton({
           </div>
         </div>
       </div>
-      <div className="border-x">
+      <div>
         {Array.from({ length: 10 }).map((_, index) => (
           <div
             key={index}
-            className={`block px-4 py-6 ${
+            className={`border my-4 rounded-custom block px-4 py-6 ${
               index % 2 === 0 ? "bg-white" : "skeleton"
             } text-transparent`}
           >
