@@ -52,7 +52,7 @@ export default function StatusFilter() {
           let statusIconColor = "";
 
           if (status === "TODO") {
-            statusIconColor = "text-blue-600";
+            statusIconColor = "text-primary";
           } else if (status === "SOLVED") {
             statusIconColor = "text-emerald-700";
           } else if (status === "ATTEMPTED") {
@@ -67,9 +67,7 @@ export default function StatusFilter() {
               className="flex items-center cursor-pointer px-4 py-2 hover:bg-slate-200 transition-colors rounded-custom"
             >
               {StatusIcon && (
-                <StatusIcon
-                  className={`text-base sm:text-xl mr-4 ${statusIconColor}`}
-                />
+                <StatusIcon className={`text-xl mr-4 ${statusIconColor}`} />
               )}
               <span className="capitalize">
                 {status.charAt(0) + status.substring(1).toLocaleLowerCase()}
