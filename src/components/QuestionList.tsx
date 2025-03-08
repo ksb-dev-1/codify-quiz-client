@@ -122,9 +122,9 @@ export default function QuestionList({
 
                   <span className="sm:w-[calc(34.55px+2rem)] flex justify-end">
                     {isSaved ? (
-                      <RemoveQuestionButton questionId={id} />
+                      <RemoveQuestionButton questionId={id} marginTop="mt-6" />
                     ) : (
-                      <SaveQuestionButton questionId={id} />
+                      <SaveQuestionButton questionId={id} marginTop="mt-6" />
                     )}
                   </span>
                 </div>

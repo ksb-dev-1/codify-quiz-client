@@ -11,8 +11,10 @@ import { VscHeart } from "react-icons/vsc";
 
 export default function SaveQuestionButton({
   questionId,
+  marginTop,
 }: {
   questionId: string;
+  marginTop?: string;
 }) {
   const queryClient = useQueryClient();
 
@@ -42,12 +44,12 @@ export default function SaveQuestionButton({
       aria-label="save-question-button"
       onClick={() => saveQuestionMutation.mutate()}
       disabled={saveQuestionMutation.isPending}
-      className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end"
+      className={`${marginTop} sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end`}
     >
       {saveQuestionMutation.isPending ? (
-        <Loader className="w-5 h-5 animate-spin text-pink-600" />
+        <Loader className="w-6 h-6 animate-spin text-pink-600" />
       ) : (
-        <VscHeart className="text-2xl text-pink-600 cursor-pointer" />
+        <VscHeart className="w-6 h-6 text-pink-600 cursor-pointer" />
       )}
     </button>
   );

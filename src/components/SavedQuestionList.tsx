@@ -133,7 +133,7 @@ function SavedQuestionList({
                 </span>
 
                 <span className="sm:w-[calc(34.55px+2rem)] flex justify-end">
-                  <RemoveQuestionButton questionId={id} />
+                  <RemoveQuestionButton questionId={id} marginTop="mt-6" />
                 </span>
               </div>
             </div>

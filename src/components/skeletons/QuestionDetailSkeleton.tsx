@@ -6,7 +6,7 @@ export default function QuestionDetailSkeleton() {
         <div className="skeleton rounded-custom">Back to Questions</div>
 
         {/* Save Button */}
-        <button className="skeleton w-5 h-5 rounded-full"></button>
+        <button className="skeleton w-6 h-6 rounded-full"></button>
       </div>
       <div className="mt-4 border p-4 sm:p-8 rounded-custom">
         {/* Question */}

@@ -11,8 +11,10 @@ import { VscHeartFilled } from "react-icons/vsc";
 
 export default function RemoveQuestionButton({
   questionId,
+  marginTop,
 }: {
   questionId: string;
+  marginTop?: string;
 }) {
   const queryClient = useQueryClient();
 
@@ -42,12 +44,12 @@ export default function RemoveQuestionButton({
       aria-label="remove-question-button"
       onClick={() => mutation.mutate()}
       disabled={mutation.isPending}
-      className="mt-6 sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end"
+      className={`${marginTop} sm:mt-0 sm:w-[calc(32px+2rem)] flex justify-end`}
     >
       {mutation.isPending ? (
-        <Loader className="w-5 h-5 animate-spin text-pink-600" />
+        <Loader className="w-6 h-6 animate-spin text-pink-600" />
       ) : (
-        <VscHeartFilled className="text-2xl text-pink-600 cursor-pointer" />
+        <VscHeartFilled className="w-6 h-6 text-pink-600 cursor-pointer" />
       )}
     </button>
   );
