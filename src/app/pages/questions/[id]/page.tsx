@@ -1,8 +1,15 @@
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
 // components
 import Container from "@/components/shared/Container";
+import QuestionDetail from "@/components/QuestionDetail";
+
+export const metadata: Metadata = {
+  title: "Question Detail",
+  description: "Question Detail",
+};
 
 export default async function QuestionDetailPage({
   params,
@@ -20,7 +27,7 @@ export default async function QuestionDetailPage({
 
   return (
     <Container>
-      <p>{id}</p>
+      <QuestionDetail userId={userId} questionId={id} />
     </Container>
   );
 }

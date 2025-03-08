@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // constants
@@ -15,7 +14,7 @@ import fetchSavedQuestions from "@/lib/fetchSavedQuestions";
 // components
 import QuestionListSkeleton from "@/components/skeletons/QuestionListSkeleton";
 import QuestionsHeader from "@/components/shared/QuestionsHeader";
-import SaveRemoveButton from "./SaveRemoveButton";
+import RemoveQuestionButton from "./RemoveQuestionButton";
 
 // 3rd party
 import { useQuery } from "@tanstack/react-query";
@@ -52,26 +51,7 @@ function SavedQuestionList({
   savedQuestionsError,
   savedQuestions,
 }: SavedQuestionListProps) {
-  const [optimisticQuestions, setOptimisticQuestions] =
-    useState(savedQuestions);
-
-  useEffect(() => {
-    setOptimisticQuestions(savedQuestions);
-  }, [savedQuestions]); // 🔥 Updates state whenever `savedQuestions` prop changes
-
-  const handleSave = (questionID: string) => {
-    setOptimisticQuestions((prev) =>
-      prev.map((q) => (q.id === questionID ? { ...q, isSaved: true } : q))
-    );
-  };
-
-  const handleRemove = (questionID: string) => {
-    setOptimisticQuestions((prev) =>
-      prev.map((q) => (q.id === questionID ? { ...q, isSaved: false } : q))
-    );
-  };
-
-  if (savedQuestionsLoading || optimisticQuestions.length === 0) {
+  if (savedQuestionsLoading) {
     return <QuestionListSkeleton text="Saved Questions" />;
   }
 
@@ -84,7 +64,7 @@ function SavedQuestionList({
     );
   }
 
-  if (optimisticQuestions.length === 0) {
+  if (savedQuestions.length === 0) {
     return <p className="text-xl mt-8">No saved questions found!</p>;
   }
 
@@ -92,84 +72,73 @@ function SavedQuestionList({
     <div>
       <QuestionsHeader text="Saved Questions" />
       <div className="border-x">
-        {optimisticQuestions.map(
-          ({ id, qNo, status, topicName, difficulty }) => {
-            const StatusIcon = getStatusIcon(status);
+        {savedQuestions.map(({ id, qNo, status, topicName, difficulty }) => {
+          const StatusIcon = getStatusIcon(status);
 
-            // Define colors statically
-            let statusIconColor = "";
+          // Define colors statically
+          let statusIconColor = "";
 
-            if (status === "TODO") {
-              statusIconColor = "text-blue-600";
-            } else if (status === "SOLVED") {
-              statusIconColor = "text-emerald-700";
-            } else if (status === "ATTEMPTED") {
-              statusIconColor = "text-orange-600";
-            }
+          if (status === "TODO") {
+            statusIconColor = "text-primary";
+          } else if (status === "SOLVED") {
+            statusIconColor = "text-emerald-700";
+          } else if (status === "ATTEMPTED") {
+            statusIconColor = "text-orange-600";
+          }
 
-            // Define colors statically
-            let difficultyTextColor = "";
+          // Define colors statically
+          let difficultyTextColor = "";
 
-            if (difficulty === "EASY") {
-              difficultyTextColor = "text-teal-700";
-            } else if (difficulty === "MEDIUM") {
-              difficultyTextColor = "text-yellow-700";
-            } else if (difficulty === "HARD") {
-              difficultyTextColor = "text-red-600";
-            }
+          if (difficulty === "EASY") {
+            difficultyTextColor = "text-teal-700";
+          } else if (difficulty === "MEDIUM") {
+            difficultyTextColor = "text-yellow-700";
+          } else if (difficulty === "HARD") {
+            difficultyTextColor = "text-red-600";
+          }
 
-            return (
-              <div
-                key={id}
-                className="w-full border-b p-4 sm:p-6 flex flex-row justify-between sm:justify-normal"
-              >
-                <div className="w-full sm:w-[calc(100%-97.27px+3rem+87.38px+2rem)] flex sm:items-center flex-col-reverse sm:flex-row justify-between sm:justify-normal">
-                  {/* Status */}
-                  <span className="sm:w-[calc(97.27px+3rem)] flex items-center">
-                    {StatusIcon && (
-                      <StatusIcon
-                        className={`text-xl mr-2 ${statusIconColor}`}
-                      />
-                    )}
-                    <span>
-                      {status.charAt(0) + status.substring(1).toLowerCase()}
-                    </span>
-                  </span>
+          return (
+            <div
+              key={id}
+              className="w-full border-b p-4 sm:p-6 flex flex-row justify-between sm:justify-normal"
+            >
+              <div className="w-full flex sm:items-center flex-col-reverse sm:flex-row justify-between sm:justify-normal">
+                {/* Status */}
+                <span className="sm:w-[calc(42.85px+2rem)] flex items-center">
+                  {StatusIcon && (
+                    <StatusIcon className={`text-xl mr-2 ${statusIconColor}`} />
+                  )}
+                </span>
 
-                  {/* Topic */}
-                  <div className="sm:w-[calc(100%-97.28px+4rem)]">
-                    <div className="w-fit flex items-cente">
-                      <span className="mr-1 font-medium">{qNo}.</span>
-                      <Link
-                        href={`/pages/questions/${id}`}
-                        className=" text-blue-600 underline"
-                      >
-                        {topicName}
-                      </Link>
-                    </div>
+                {/* Topic */}
+                <div className="sm:w-full">
+                  <div className="w-fit flex items-cente">
+                    <span className="mr-2">{qNo}.</span>
+                    <Link
+                      href={`/pages/questions/${id}`}
+                      className=" text-blue-600 underline"
+                    >
+                      {topicName}
+                    </Link>
                   </div>
                 </div>
-
-                <div className="sm:w-[calc(55.38px+32px+2rem)] sm:mt-0 flex flex-col sm:flex-row items-end sm:items-center justify-between sm:justify-normal">
-                  {/* Difficulty */}
-                  <span
-                    className={`sm:w-[calc(55.38px)] flex justify-end ${difficultyTextColor}`}
-                  >
-                    {difficulty.charAt(0) +
-                      difficulty.substring(1).toLowerCase()}
-                  </span>
-
-                  <SaveRemoveButton
-                    questionId={id}
-                    isSaved={true}
-                    onSave={handleSave}
-                    onRemove={handleRemove}
-                  />
-                </div>
               </div>
-            );
-          }
-        )}
+
+              <div className="sm:mt-0 flex flex-col sm:flex-row items-end sm:items-center justify-between sm:justify-normal">
+                {/* Difficulty */}
+                <span
+                  className={`sm:w-[calc(64.81px+2rem)] flex justify-end ${difficultyTextColor}`}
+                >
+                  {difficulty.charAt(0) + difficulty.substring(1).toLowerCase()}
+                </span>
+
+                <span className="sm:w-[calc(34.55px+2rem)] flex justify-end">
+                  <RemoveQuestionButton questionId={id} />
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
