@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 // hooks
 import { useHeaderShadowOnScroll } from "@/hooks/useHeaderShadowOnScroll";
@@ -43,11 +44,13 @@ function NavbarWrapper({ children }: { children: React.ReactNode }) {
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isSideNavOpen, setIsSideNavOpen] = useState<boolean>(false); // Set initial state to false
   const sideNavRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const title = "{Codify}";
+  const path = pathname.split("/")[2];
 
   useHandleOutsideClick(profileRef, setIsOpen);
   useHandleOutsideClick(sideNavRef, setIsSideNavOpen);
@@ -99,19 +102,31 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center">
             <Link
               href="/pages/questions?page=1"
-              className="px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
+              className={`flex items-center justify-center ${
+                path === "questions"
+                  ? "border-b-2 border-primary"
+                  : "border-b-2 border-transparent"
+              } h-[72px] rounded-custom transition-colors`}
             >
               Questions
             </Link>
             <Link
               href="/pages/saved"
-              className="px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors mx-4"
+              className={`flex items-center justify-center ${
+                path === "saved"
+                  ? "border-b-2 border-primary"
+                  : "border-b-2 border-transparent"
+              } h-[72px] mx-12 rounded-custom transition-colors`}
             >
               Saved
             </Link>
             <Link
               href="#"
-              className="px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
+              className={`flex items-center justify-center ${
+                path === "premium"
+                  ? "border-b-2 border-primary"
+                  : "border-b-2 border-transparent"
+              } h-[72px] rounded-custom transition-colors`}
             >
               Premium
             </Link>

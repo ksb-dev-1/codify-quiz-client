@@ -28,7 +28,12 @@ export default function QuestionList({
   isFilterApplied,
 }: QuestionListProps) {
   if (questionsLoading) {
-    return <QuestionListSkeleton text="Questions" marginTop="mt-8" />;
+    return (
+      <QuestionListSkeleton
+        text="Questions"
+        marginTop={isFilterApplied ? "mt-8" : ""}
+      />
+    );
   }
 
   if (questionsError) {
@@ -53,11 +58,14 @@ export default function QuestionList({
   }
 
   return (
-    <div className="mt-8">
-      <QuestionsHeader text="Questions" />
-      <div className="border-x">
+    <div>
+      <QuestionsHeader
+        text="Questions"
+        marginTop={isFilterApplied ? "mt-8" : ""}
+      />
+      <div className="border-b">
         {questions.map(
-          ({ id, qNo, status, topicName, difficulty, isSaved }) => {
+          ({ id, qNo, status, topicName, difficulty, isSaved }, index) => {
             const StatusIcon = getStatusIcon(status);
 
             // Define colors statically
@@ -85,7 +93,9 @@ export default function QuestionList({
             return (
               <div
                 key={id}
-                className="w-full border-b p-4 sm:p-6 flex flex-row justify-between sm:justify-normal"
+                className={`${
+                  index % 2 === 0 ? "" : "bg-slate-200"
+                } w-full p-4 sm:p-6 flex flex-row justify-between sm:justify-normal`}
               >
                 <div className="w-full flex sm:items-center flex-col-reverse sm:flex-row justify-between sm:justify-normal">
                   {/* Status */}

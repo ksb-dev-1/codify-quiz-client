@@ -1,19 +1,23 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
+
+// hooks
+import { useHandleOutsideClick } from "@/hooks/useHandleOutsideClick";
+
 // lib
 import fetchQuestions from "@/lib/fetchQuestions";
 import fetchTopics from "@/lib/fetchTopics";
 
 // components
-import StatusFilter from "@/components/StatusFilter";
-import DifficultyFilter from "@/components/DifficultyFilter";
-import TopicsFilter from "@/components/TopicsFilter";
+import Filter from "@/components/Filter";
 import FilterTags from "@/components/FilterTags";
 import QuestionList from "@/components/QuestionList";
 import Pagination from "@/components/Pagination";
 
 // 3rd party
 import { useQueries } from "@tanstack/react-query";
+import { IoFilter } from "react-icons/io5";
 
 interface QuestionsProps {
   userId: string;
@@ -30,6 +34,25 @@ export default function QuestionListWrapper({
   currentDifficulty,
   currentTopic,
 }: QuestionsProps) {
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  useHandleOutsideClick(filterRef, setFilterOpen);
+
+  // To handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 786 && filterOpen) {
+        setFilterOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, [filterOpen]);
+
   // Parallelly fetch questions and topics
   const [questionsQuery, topicsQuery] = useQueries({
     queries: [
@@ -72,55 +95,89 @@ export default function QuestionListWrapper({
     currentStatus || currentDifficulty || currentTopic ? true : false;
 
   return (
-    <div className="w-full flex flex-col items-start">
-      {/* Filters */}
-      {!questionsError && (
-        <div className="w-full grid md:grid-cols-2 gap-4">
-          <div className="grid grid-cols-2 gap-4">
-            <StatusFilter />
-            <DifficultyFilter />
-          </div>
-          {topicsLoading ? (
-            <div className="skeleton w-full px-4 py-2 rounded-custom border border-transparent text-transparent">
-              skeleton
-            </div>
-          ) : (
-            <TopicsFilter
+    <>
+      <div className="w-full flex flex-col items-start">
+        <div className="w-full flex items-start">
+          <div className="sticky top-[9rem] hidden md:flex flex-col items-start max-w-72 w-full mr-8 border rounded-custom p-6">
+            {/* Filter */}
+            <Filter
+              currentStatus={currentStatus}
+              currentDifficulty={currentDifficulty}
               topicsData={topicsData}
               topicsLoading={topicsLoading}
               topicsError={topicsError}
+              currentTopic={currentTopic}
             />
-          )}
-        </div>
-      )}
+          </div>
 
-      <div className="w-full">
-        {/* Filter Tags */}
-        {(currentStatus || currentDifficulty || currentTopic) && (
-          <FilterTags
+          <div className="w-full flex flex-col items-end">
+            <div className="w-full">
+              {/* Filter Tags */}
+              {(currentStatus || currentDifficulty || currentTopic) && (
+                <FilterTags
+                  currentStatus={currentStatus}
+                  currentDifficulty={currentDifficulty}
+                  currentTopic={currentTopic}
+                />
+              )}
+
+              {/* Question List*/}
+              <QuestionList
+                questionsLoading={questionsLoading}
+                questionsError={questionsError}
+                questions={questions}
+                isFilterApplied={isFilterApplied}
+              />
+            </div>
+
+            {/* Pagination */}
+            {!questionsError && totalPages > 1 && (
+              <Pagination
+                questionsLoading={questionsLoading}
+                currentPage={Number(currentPage)}
+                totalPages={totalPages}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+      {/* Filter Button */}
+      <button
+        onClick={() => setFilterOpen(true)}
+        className="fixed bottom-8 right-8 px-4 py-2 bg-primary border-2 border-white text-white rounded-custom flex md:hidden items-center hover:bg-hover transition-colors"
+      >
+        <IoFilter className="mr-2 text-xl" />
+        <span>Filter</span>
+      </button>
+      <div
+        className={`${
+          filterOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        } transition-opacity fixed z-20 top-0 left-0 right-0 bottom-0 bg-[rgb(0,30,43,0.5)] flex flex-col justify-end`}
+      >
+        <div
+          ref={filterRef}
+          className={`${
+            filterOpen ? "translate-y-0" : "translate-y-[100%]"
+          } bg-white rounded-custom p-8 transition-transform duration-300`}
+        >
+          {/* Filter */}
+          <Filter
             currentStatus={currentStatus}
             currentDifficulty={currentDifficulty}
+            topicsData={topicsData}
+            topicsLoading={topicsLoading}
+            topicsError={topicsError}
             currentTopic={currentTopic}
           />
-        )}
-
-        {/* Question List*/}
-        <QuestionList
-          questionsLoading={questionsLoading}
-          questionsError={questionsError}
-          questions={questions}
-          isFilterApplied={isFilterApplied}
-        />
+        </div>
       </div>
-
-      {/* Pagination */}
-      {!questionsError && totalPages > 1 && (
-        <Pagination
-          questionsLoading={questionsLoading}
-          currentPage={Number(currentPage)}
-          totalPages={totalPages}
-        />
-      )}
-    </div>
+    </>
   );
 }
+
+/*<button
+          onClick={() => setFilterOpen(true)}
+          className="relative w-10 h-10 border rounded-custom hover:bg-slate-200 transition-colors md:hidden"
+        >
+          <IoFilter className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
+        </button> */

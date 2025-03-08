@@ -1,153 +1,36 @@
-// "use client";
-
-// import { useState, useRef } from "react";
-// import Link from "next/link";
-// import { useSearchParams } from "next/navigation";
-
-// // hooks
-// import { useHandleOutsideClick } from "@/hooks/useHandleOutsideClick";
-
-// // types
-// import { Topic } from "@/types/types";
-
-// // 3rd party
-// import { IoCaretDown } from "react-icons/io5";
-
-// interface TopicsFilterProps {
-//   topics: Topic[];
-// }
-
-// export default function TopicsFilter({ topics }: TopicsFilterProps) {
-//   const [isOpen, setIsOpen] = useState<boolean>(false);
-//   const dropDownRef = useRef<HTMLDivElement>(null);
-//   const searchParams = useSearchParams();
-
-//   useHandleOutsideClick(dropDownRef, setIsOpen);
-
-//   return (
-//     <div ref={dropDownRef} className="relative w-full">
-//       <div
-//         onClick={() => setIsOpen((prev) => !prev)}
-//         className="relative w-full cursor-pointer px-4 py-2 rounded-custom border"
-//       >
-//         <span>Topics</span>
-//         <span
-//           className={`absolute top-3 right-2 ${
-//             isOpen ? "rotate-180" : "rotate-0"
-//           } transition-transform`}
-//         >
-//           <IoCaretDown />
-//         </span>
-//       </div>
-
-//       <div
-//         className={`bg-white w-full mt-2 z-10 border shadow-xl ${
-//           isOpen ? "scale-1" : "scale-0"
-//         } absolute rounded-custom p-2 origin-top-left transition-transform`}
-//       >
-//         {/* Error State */}
-//         {/* {!topicsLoading && topicsError && (
-//           <div className="text-red-600 p-2 text-center w-full">
-//             Failed to fetch topics! Please refresh the page.
-//           </div>
-//         )} */}
-
-//         {/* No Topics Found */}
-//         {topics.length === 0 && (
-//           <div className="p-2 text-center w-full">No topics found!</div>
-//         )}
-
-//         {/* Loading Skeleton */}
-//         {/* <div className="w-full flex items-center flex-wrap gap-4">
-//           {topicsLoading &&
-//             Array.from({ length: 4 }).map((_, index) => (
-//               <span
-//                 key={index}
-//                 className="skeleton px-3 py-1 border border-transparent rounded-custom text-transparent"
-//               >
-//                 Loading...
-//               </span>
-//             ))}
-//         </div> */}
-
-//         {/* Topics List */}
-//         <div className="w-full flex items-center flex-wrap gap-2">
-//           {topics.map((topic: Topic) => {
-//             const newParams = new URLSearchParams(searchParams.toString());
-//             newParams.set("topic", topic.name);
-//             newParams.set("page", "1");
-
-//             return (
-//               <Link
-//                 key={topic.id}
-//                 onClick={() => setIsOpen((prev) => !prev)}
-//                 href={`?${newParams.toString()}`}
-//                 aria-label={`View questions related to ${topic.name}`}
-//                 className="px-4 py-2 rounded-custom border hover:bg-slate-200 transition-colors"
-//               >
-//                 {topic.name}
-//               </Link>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-// hooks
-import { useHandleOutsideClick } from "@/hooks/useHandleOutsideClick";
-
 // 3rd party
-import { IoCaretDown } from "react-icons/io5";
 import { Topic } from "@/types/types";
+import { FaChevronDown } from "react-icons/fa6";
 
 interface TopicsFilterProps {
   topicsData: { topics: Topic[] };
   topicsLoading: boolean;
   topicsError: boolean;
+  currentTopic: string | undefined;
 }
 
 export default function TopicsFilter({
   topicsData,
   topicsLoading,
   topicsError,
+  currentTopic,
 }: TopicsFilterProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const dropDownRef = useRef<HTMLDivElement>(null);
+  const [more, setMore] = useState<boolean>(false);
   const searchParams = useSearchParams();
 
-  useHandleOutsideClick(dropDownRef, setIsOpen);
-
   const topics = topicsData?.topics || [];
+  const displayedTopics = more ? topics : topics.slice(0, 3); // Show only 5 initially
 
   return (
-    <div ref={dropDownRef} className="relative w-full">
-      <div
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="relative w-full cursor-pointer px-4 py-2 rounded-custom border"
-      >
-        <span>Topics</span>
-        <span
-          className={`absolute top-3 right-2 ${
-            isOpen ? "rotate-180" : "rotate-0"
-          } transition-transform`}
-        >
-          <IoCaretDown />
-        </span>
-      </div>
-
-      <div
-        className={`bg-white w-full mt-2 z-10 border shadow-xl ${
-          isOpen ? "scale-1" : "scale-0"
-        } absolute rounded-custom p-2 origin-top-left transition-transform`}
-      >
+    <div className="mt-8 relative w-full">
+      <p className="font-semibold text-xl mb-4">Topics</p>
+      <div>
         {/* Error State */}
         {!topicsLoading && topicsError && (
           <div className="text-red-600 p-2 text-center w-full">
@@ -166,7 +49,7 @@ export default function TopicsFilter({
             Array.from({ length: 4 }).map((_, index) => (
               <span
                 key={index}
-                className="skeleton px-3 py-1 border border-transparent rounded-custom text-transparent"
+                className="skeleton px-2 py-1 border border-transparent rounded-custom text-transparent"
               >
                 Loading...
               </span>
@@ -175,7 +58,7 @@ export default function TopicsFilter({
 
         {/* Topics List */}
         <div className="w-full flex items-center flex-wrap gap-2">
-          {topics.map((topic: Topic) => {
+          {displayedTopics.map((topic: Topic) => {
             const newParams = new URLSearchParams(searchParams.toString());
             newParams.set("topic", topic.name);
             newParams.set("page", "1");
@@ -183,15 +66,30 @@ export default function TopicsFilter({
             return (
               <Link
                 key={topic.id}
-                onClick={() => setIsOpen((prev) => !prev)}
                 href={`?${newParams.toString()}`}
                 aria-label={`View questions related to ${topic.name}`}
-                className="px-4 py-2 rounded-custom border hover:bg-slate-200 transition-colors"
+                className={`${
+                  currentTopic === topic.name
+                    ? "bg-primary text-white"
+                    : "hover:bg-slate-200"
+                } px-3 py-1 rounded-custom border  transition-colors`}
               >
                 {topic.name}
               </Link>
             );
           })}
+          {topics.length > 3 && (
+            <button
+              onClick={() => setMore(!more)}
+              className="px-3 h-[35.4px] border rounded-custom hover:bg-slate-200 transition-colors"
+            >
+              <FaChevronDown
+                className={`${
+                  more ? "rotate-180" : "rotate-0"
+                } transition-transform`}
+              />
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -11,15 +11,17 @@ export default function LandingPage({
   return (
     <Container>
       <header className="flex flex-col items-center slide-in">
-        <h3 className="w-fit text-3xl font-extrabold py-4">
+        <h3 className="w-fit text-3xl sm:text-5xl font-extrabold sm:py-4">
           Welcome to Codify
         </h3>
 
-        <p>Your go to platform for learning javascript</p>
+        <p className="sm:text-xl mt-4 mb-8">
+          Your go to platform for learning javascript
+        </p>
 
         <Link
           href={userId ? "/pages/questions?page=1" : "/pages/signin"}
-          className="my-8 bg-primary text-white px-8 py-3 rounded-custom hover:tracking-widest transition-all"
+          className="mb-8 bg-primary text-white px-8 py-3 rounded-custom hover:tracking-widest transition-all"
         >
           Start Learning
         </Link>
