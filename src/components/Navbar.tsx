@@ -106,7 +106,7 @@ export default function Navbar() {
                 path === "questions"
                   ? "border-b-2 border-primary"
                   : "border-b-2 border-transparent"
-              } h-[72px] rounded-custom transition-colors`}
+              } h-[72px] transition-colors`}
             >
               Questions
             </Link>
@@ -116,7 +116,7 @@ export default function Navbar() {
                 path === "saved"
                   ? "border-b-2 border-primary"
                   : "border-b-2 border-transparent"
-              } h-[72px] mx-12 rounded-custom transition-colors`}
+              } h-[72px] mx-12 transition-colors`}
             >
               Saved
             </Link>
@@ -126,7 +126,7 @@ export default function Navbar() {
                 path === "premium"
                   ? "border-b-2 border-primary"
                   : "border-b-2 border-transparent"
-              } h-[72px] rounded-custom transition-colors`}
+              } h-[72px] transition-colors`}
             >
               Premium
             </Link>

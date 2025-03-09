@@ -1,31 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 // 3rd party
 import { Topic } from "@/types/types";
 import { FaChevronDown } from "react-icons/fa6";
 
-interface TopicsFilterProps {
+type TopicsFilterProps = {
   topicsData: { topics: Topic[] };
   topicsLoading: boolean;
   topicsError: boolean;
-  currentTopic: string | undefined;
-}
+  passedTopic: string | undefined;
+  setTopic: Dispatch<SetStateAction<string | undefined>>;
+};
 
 export default function TopicsFilter({
   topicsData,
   topicsLoading,
   topicsError,
-  currentTopic,
+  passedTopic,
+  setTopic,
 }: TopicsFilterProps) {
   const [more, setMore] = useState<boolean>(false);
   const searchParams = useSearchParams();
 
   const topics = topicsData?.topics || [];
-  const displayedTopics = more ? topics : topics.slice(0, 3); // Show only 5 initially
+  const displayedTopics = more ? topics : topics.slice(0, 3);
+
+  const toggleTopic = (topic: string) => {
+    setTopic((prevTopic) => (prevTopic === topic ? "" : topic));
+  };
 
   return (
     <div className="mt-8 relative w-full">
@@ -44,12 +49,12 @@ export default function TopicsFilter({
         )}
 
         {/* Loading Skeleton */}
-        <div className="w-full flex items-center flex-wrap gap-4">
+        <div className="w-full flex items-center flex-wrap gap-2">
           {topicsLoading &&
             Array.from({ length: 4 }).map((_, index) => (
               <span
                 key={index}
-                className="skeleton px-2 py-1 border border-transparent rounded-custom text-transparent"
+                className="skeleton px-3 py-1 border border-transparent rounded-custom text-transparent"
               >
                 Loading...
               </span>
@@ -64,18 +69,18 @@ export default function TopicsFilter({
             newParams.set("page", "1");
 
             return (
-              <Link
+              <button
                 key={topic.id}
-                href={`?${newParams.toString()}`}
                 aria-label={`View questions related to ${topic.name}`}
+                onClick={() => toggleTopic(topic.name)}
                 className={`${
-                  currentTopic === topic.name
+                  passedTopic === topic.name
                     ? "bg-primary text-white"
                     : "hover:bg-slate-200"
                 } px-3 py-1 rounded-custom border  transition-colors`}
               >
                 {topic.name}
-              </Link>
+              </button>
             );
           })}
           {topics.length > 3 && (

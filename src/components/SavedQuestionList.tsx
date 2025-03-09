@@ -71,7 +71,7 @@ function SavedQuestionList({
   return (
     <div>
       <QuestionsHeader text="Saved Questions" />
-      <div className="border-b">
+      <div className="border-b rounded-custom">
         {savedQuestions.map(
           ({ id, qNo, status, topicName, difficulty }, index) => {
             const StatusIcon = getStatusIcon(status);
@@ -103,7 +103,7 @@ function SavedQuestionList({
                 key={id}
                 className={`${
                   index % 2 === 0 ? "" : "bg-slate-200"
-                } w-full p-4 sm:p-6 flex flex-row justify-between sm:justify-normal`}
+                } rounded-custom w-full p-4 sm:p-6 flex flex-row justify-between sm:justify-normal`}
               >
                 <div className="w-full flex sm:items-center flex-col-reverse sm:flex-row justify-between sm:justify-normal">
                   {/* Status */}

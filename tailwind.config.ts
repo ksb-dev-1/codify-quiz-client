@@ -20,7 +20,7 @@ const config: Config = {
         DEFAULT: "#cbd5e1", // Default border color
       },
       borderRadius: {
-        custom: "0px",
+        custom: "4px",
       },
       boxShadow: {
         // custom: "0 6px 12px rgba(30, 10, 58, 0.08)",

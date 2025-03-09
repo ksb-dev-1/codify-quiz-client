@@ -29,7 +29,7 @@ function RemoveFilterButton({ filter }: { filter: string }) {
   return (
     <div
       onClick={() => removeFilter(filter)}
-      className="relative h-5 w-5 rounded-custom bg-primary text-white hover:bg-hover transition-colors"
+      className="relative h-5 w-5 rounded-full bg-primary text-white hover:bg-hover transition-colors"
     >
       <IoCloseSharp className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-sm" />
     </div>

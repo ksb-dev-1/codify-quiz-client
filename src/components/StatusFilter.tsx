@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Constants
@@ -9,12 +9,20 @@ import { statuses, getStatusIcon } from "@/constants/statuses";
 // 3rd party
 import { IoIosCheckmark } from "react-icons/io";
 
+type StatusFilterProps = {
+  passedStatus: string | undefined;
+  setStatus: Dispatch<SetStateAction<string | undefined>>;
+};
+
 export default function StatusFilter({
-  currentStatus,
-}: {
-  currentStatus: string | undefined;
-}) {
+  passedStatus,
+  setStatus,
+}: StatusFilterProps) {
   const searchParams = useSearchParams();
+
+  const toggleStatus = (status: string) => {
+    setStatus((prevStatus) => (prevStatus === status ? "" : status));
+  };
 
   return (
     <div className="relative w-full">
@@ -39,17 +47,18 @@ export default function StatusFilter({
           }
 
           return (
-            <Link
+            <button
               key={status}
-              href={`?${newParams.toString()}`}
+              aria-label={status}
+              onClick={() => toggleStatus(status)}
               className="flex items-center cursor-pointer hover:underline rounded-custom"
             >
-              {currentStatus === status ? (
-                <span className="relative w-5 h-5 bg-primary text-white rounded-custom mr-4">
+              {passedStatus === status ? (
+                <span className="relative w-5 h-5 bg-primary text-white rounded-full mr-4">
                   <IoIosCheckmark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
                 </span>
               ) : (
-                <span className="w-5 h-5 border rounded-custom mr-4"></span>
+                <span className="w-5 h-5 border rounded-full mr-4"></span>
               )}
 
               <span className="capitalize">
@@ -59,7 +68,7 @@ export default function StatusFilter({
               {StatusIcon && (
                 <StatusIcon className={`text-xl ml-2 ${statusIconColor}`} />
               )}
-            </Link>
+            </button>
           );
         })}
       </div>

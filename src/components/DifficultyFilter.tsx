@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Constants
@@ -9,12 +9,22 @@ import { difficulties } from "@/constants/difficulties";
 // 3rd party
 import { IoIosCheckmark } from "react-icons/io";
 
+type difficultyFilterProps = {
+  passedDifficulty: string | undefined;
+  setDifficulty: Dispatch<SetStateAction<string | undefined>>;
+};
+
 export default function DifficultyFilter({
-  currentDifficulty,
-}: {
-  currentDifficulty: string | undefined;
-}) {
+  passedDifficulty,
+  setDifficulty,
+}: difficultyFilterProps) {
   const searchParams = useSearchParams();
+
+  const toggleDifficulty = (difficulty: string) => {
+    setDifficulty((prevDifficulty) =>
+      prevDifficulty === difficulty ? "" : difficulty
+    );
+  };
 
   return (
     <div className="mt-8 relative w-full">
@@ -37,24 +47,25 @@ export default function DifficultyFilter({
           }
 
           return (
-            <Link
+            <button
               key={difficulty}
-              href={`?${newParams.toString()}`}
+              aria-label={difficulty}
+              onClick={() => toggleDifficulty(difficulty)}
               className="flex items-center cursor-pointer hover:underline rounded-custom"
             >
-              {currentDifficulty === difficulty ? (
-                <span className="relative w-5 h-5 bg-primary text-white rounded-custom mr-4">
+              {passedDifficulty === difficulty ? (
+                <span className="relative w-5 h-5 bg-primary text-white rounded-full mr-4">
                   <IoIosCheckmark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
                 </span>
               ) : (
-                <span className="w-5 h-5 border rounded-custom mr-4"></span>
+                <span className="w-5 h-5 border rounded-full mr-4"></span>
               )}
 
               <span className={difficultyTextColor}>
                 {difficulty.charAt(0) +
                   difficulty.substring(1).toLocaleLowerCase()}
               </span>
-            </Link>
+            </button>
           );
         })}
       </div>

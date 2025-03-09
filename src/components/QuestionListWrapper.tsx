@@ -34,16 +34,16 @@ export default function QuestionListWrapper({
   currentDifficulty,
   currentTopic,
 }: QuestionsProps) {
-  const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
-  useHandleOutsideClick(filterRef, setFilterOpen);
+  useHandleOutsideClick(filterRef, setIsFilterOpen);
 
   // To handle window resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 786 && filterOpen) {
-        setFilterOpen(false);
+      if (window.innerWidth >= 786 && isFilterOpen) {
+        setIsFilterOpen(false);
       }
     };
 
@@ -51,7 +51,7 @@ export default function QuestionListWrapper({
 
     // Cleanup
     return () => window.removeEventListener("resize", handleResize);
-  }, [filterOpen]);
+  }, [isFilterOpen]);
 
   // Parallelly fetch questions and topics
   const [questionsQuery, topicsQuery] = useQueries({
@@ -107,6 +107,7 @@ export default function QuestionListWrapper({
               topicsLoading={topicsLoading}
               topicsError={topicsError}
               currentTopic={currentTopic}
+              //isFilterApplied={isFilterApplied}
             />
           </div>
 
@@ -141,26 +142,27 @@ export default function QuestionListWrapper({
           </div>
         </div>
       </div>
-      {/* Filter Button */}
+      {/* Filter button for small screen */}
       <button
-        onClick={() => setFilterOpen(true)}
+        onClick={() => setIsFilterOpen(true)}
         className="fixed bottom-8 right-8 px-4 py-2 bg-primary border-2 border-white text-white rounded-custom flex md:hidden items-center hover:bg-hover transition-colors"
       >
         <IoFilter className="mr-2 text-xl" />
         <span>Filter</span>
       </button>
+
+      {/* Filter for smaller screen */}
       <div
         className={`${
-          filterOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          isFilterOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         } transition-opacity fixed z-20 top-0 left-0 right-0 bottom-0 bg-[rgb(0,30,43,0.5)] flex flex-col justify-end`}
       >
         <div
           ref={filterRef}
           className={`${
-            filterOpen ? "translate-y-0" : "translate-y-[100%]"
+            isFilterOpen ? "translate-y-0" : "translate-y-[100%]"
           } bg-white rounded-custom p-8 transition-transform duration-300`}
         >
-          {/* Filter */}
           <Filter
             currentStatus={currentStatus}
             currentDifficulty={currentDifficulty}
@@ -168,16 +170,10 @@ export default function QuestionListWrapper({
             topicsLoading={topicsLoading}
             topicsError={topicsError}
             currentTopic={currentTopic}
+            setIsFilterOpen={setIsFilterOpen}
           />
         </div>
       </div>
     </>
   );
 }
-
-/*<button
-          onClick={() => setFilterOpen(true)}
-          className="relative w-10 h-10 border rounded-custom hover:bg-slate-200 transition-colors md:hidden"
-        >
-          <IoFilter className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
-        </button> */
