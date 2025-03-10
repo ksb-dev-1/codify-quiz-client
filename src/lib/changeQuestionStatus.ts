@@ -1,12 +1,12 @@
 import { QuestionStatusEnum } from "@prisma/client";
 
 export default async function changeQuestionStatus(
-  userId: string,
+  userId: string | undefined,
   questionId: string,
   status: QuestionStatusEnum
 ) {
   const queryParams = new URLSearchParams();
-  queryParams.set("userId", userId);
+  if (userId) queryParams.set("userId", userId);
 
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL

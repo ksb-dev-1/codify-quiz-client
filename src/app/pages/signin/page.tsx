@@ -1,5 +1,7 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 // Actions
 import { googleSigninAction, githubSigninAction } from "@/actions/signInAction";
@@ -8,6 +10,10 @@ import { googleSigninAction, githubSigninAction } from "@/actions/signInAction";
 import Container from "@/components/shared/Container";
 import GoogleSignInButton from "@/components/GoogleSigninButton";
 import GitHubSignInButton from "@/components/GithubSigninButton";
+
+// 3rd party
+import { useSession } from "next-auth/react";
+import { Loader2 } from "lucide-react";
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -22,13 +28,25 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default async function SigninPage() {
-  // Fetch session
-  const session = await auth();
+export default function SigninPage() {
+  const { data: session, status } = useSession();
   const userId = session?.user?.id;
 
-  // If user not signed in redirect to signin page
-  if (userId) redirect("/pages/questions?page=1");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status !== "loading" && userId) router.push("/pages/questions?page=1");
+  }, [status, userId, router]);
+
+  if (status === "loading") {
+    return (
+      <Container>
+        <div className="h-full flex items-center justify-center">
+          <Loader2 className="animate-spin w-10 h-10" />
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Wrapper>

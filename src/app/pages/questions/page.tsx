@@ -1,7 +1,8 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
+//import { redirect } from "next/navigation";
 
-import { auth } from "@/auth";
+// import { auth } from "@/auth";
 
 // components
 import Container from "@/components/shared/Container";
@@ -12,29 +13,30 @@ export const metadata: Metadata = {
   description: "List of questions",
 };
 
-export default async function QuestionsPageWrapper({
-  searchParams,
-}: {
+export default function QuestionsPageWrapper({}: //searchParams,
+{
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   // Fetch session
-  const session = await auth();
-  const userId = session?.user?.id;
+  // const session = await auth();
+  // const userId = session?.user?.id;
 
   // If user not signed in redirect to signin page
-  if (!userId) redirect("/pages/signin");
+  // if (!userId) redirect("/pages/signin");
 
-  const { page, status, difficulty, topic } = await searchParams;
+  //const { page, status, difficulty, topic } = await searchParams;
 
   return (
     <Container>
-      <QuestionListWrapper
-        userId={userId}
-        currentPage={page}
-        currentStatus={status}
-        currentDifficulty={difficulty}
-        currentTopic={topic}
-      />
+      <Suspense>
+        <QuestionListWrapper
+        //userId={userId}
+        // currentPage={page}
+        // currentStatus={status}
+        // currentDifficulty={difficulty}
+        // currentTopic={topic}
+        />
+      </Suspense>
     </Container>
   );
 }

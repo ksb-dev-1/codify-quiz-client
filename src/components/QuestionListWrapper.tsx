@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // hooks
 import { useHandleOutsideClick } from "@/hooks/useHandleOutsideClick";
@@ -16,26 +17,36 @@ import QuestionList from "@/components/QuestionList";
 import Pagination from "@/components/Pagination";
 
 // 3rd party
+import { useSession } from "next-auth/react";
 import { useQueries } from "@tanstack/react-query";
 import { IoFilter } from "react-icons/io5";
+import { Loader2 } from "lucide-react";
 
-interface QuestionsProps {
-  userId: string;
-  currentPage: string | undefined;
-  currentStatus: string | undefined;
-  currentDifficulty: string | undefined;
-  currentTopic: string | undefined;
-}
+// interface QuestionsProps {
+//   currentPage: string | undefined;
+//   currentStatus: string | undefined;
+//   currentDifficulty: string | undefined;
+//   currentTopic: string | undefined;
+// }
 
-export default function QuestionListWrapper({
-  userId,
-  currentPage,
-  currentStatus,
-  currentDifficulty,
-  currentTopic,
-}: QuestionsProps) {
+export default function QuestionListWrapper() {
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
+
+  const searchParams = useSearchParams();
+  const currentPage = searchParams.get("page") || "1"; // Get query parameter "name"
+  const currentStatus = searchParams.get("status") || "";
+  const currentDifficulty = searchParams.get("difficulty") || "";
+  const currentTopic = searchParams.get("topic") || "";
+
+  const router = useRouter();
+
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const filterRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status !== "loading" && !userId) router.push("/pages/signin");
+  }, [status, userId, router]);
 
   useHandleOutsideClick(filterRef, setIsFilterOpen);
 
@@ -73,13 +84,23 @@ export default function QuestionListWrapper({
             currentDifficulty,
             currentTopic
           ),
+        enabled: !!userId,
       },
       {
         queryKey: ["topics", userId],
         queryFn: () => fetchTopics(userId),
+        enabled: !!userId,
       },
     ],
   });
+
+  if (status === "loading") {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Loader2 className="animate-spin w-10 h-10" />
+      </div>
+    );
+  }
 
   const questionsLoading = questionsQuery.isLoading;
   const questionsError = questionsQuery.isError;

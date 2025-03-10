@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 // types
 import { Question } from "@/types/types";
@@ -17,19 +18,21 @@ import SaveQuestionButton from "@/components/SaveQuestionButton";
 import RemoveQuestionButton from "@/components/RemoveQuestionButton";
 
 // 3rd party
+import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IoArrowBackOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { GrCheckbox, GrCheckboxSelected, GrPowerReset } from "react-icons/gr";
 import { QuestionStatusEnum } from "@prisma/client";
+import { Loader2 } from "lucide-react";
 
-export default function QuestionDetail({
-  userId,
-  questionId,
-}: {
-  userId: string;
-  questionId: string;
-}) {
+export default function QuestionDetail() {
+  const { data: session, status: sessionStatus } = useSession();
+  const userId = session?.user?.id;
+
+  const params = useParams();
+  const questionId = params.id as string;
+
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
@@ -67,6 +70,14 @@ export default function QuestionDetail({
     },
     onError: () => toast.error("Failed to set status as attempted"),
   });
+
+  if (sessionStatus === "loading") {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Loader2 className="animate-spin w-10 h-10" />
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <QuestionDetailSkeleton />;

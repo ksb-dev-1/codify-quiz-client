@@ -1,10 +1,10 @@
 export default async function fetchQuestion(
-  userId: string,
+  userId: string | undefined,
   questionId: string
 ) {
   const queryParams = new URLSearchParams();
 
-  queryParams.set("userId", userId);
+  if (userId) queryParams.set("userId", userId);
 
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL

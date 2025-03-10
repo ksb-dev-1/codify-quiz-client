@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // constants
 import { getStatusIcon } from "@/constants/statuses";
@@ -17,7 +19,9 @@ import QuestionsHeader from "@/components/shared/QuestionsHeader";
 import RemoveQuestionButton from "./RemoveQuestionButton";
 
 // 3rd party
+import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 
 interface SavedQuestionListProps {
   savedQuestionsLoading: boolean;
@@ -25,17 +29,31 @@ interface SavedQuestionListProps {
   savedQuestions: Question[];
 }
 
-export default function SavedQuestionListWrapper({
-  userId,
-}: {
-  userId: string;
-}) {
+export default function SavedQuestionListWrapper() {
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status !== "loading" && !userId) router.push("/pages/signin");
+  }, [status, userId, router]);
+
   const { data, isError, isLoading } = useQuery({
     queryKey: ["saved-questions", userId],
     queryFn: () => fetchSavedQuestions(userId),
+    enabled: !!userId,
   });
 
   const savedQuestions = data?.savedQuestions || [];
+
+  if (status === "loading") {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Loader2 className="animate-spin w-10 h-10" />
+      </div>
+    );
+  }
 
   return (
     <SavedQuestionList
