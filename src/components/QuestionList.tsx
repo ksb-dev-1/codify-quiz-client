@@ -14,12 +14,24 @@ import QuestionsHeader from "@/components/shared/QuestionsHeader";
 import SaveQuestionButton from "@/components/SaveQuestionButton";
 import RemoveQuestionButton from "@/components/RemoveQuestionButton";
 
-interface QuestionListProps {
+type QuestionListProps = {
   questionsLoading: boolean;
   questionsError: boolean;
   questions: Question[];
   isFilterApplied: boolean;
-}
+};
+
+const statusColors = {
+  TODO: "text-primary",
+  SOLVED: "text-emerald-700",
+  ATTEMPTED: "text-orange-600",
+};
+
+const difficultyColors = {
+  EASY: "text-teal-700",
+  MEDIUM: "text-yellow-700",
+  HARD: "text-red-600",
+};
 
 export default function QuestionList({
   questionsLoading,
@@ -69,26 +81,29 @@ export default function QuestionList({
             const StatusIcon = getStatusIcon(status);
 
             // Define colors statically
-            let statusIconColor = "";
+            // let statusIconColor = "";
 
-            if (status === "TODO") {
-              statusIconColor = "text-primary";
-            } else if (status === "SOLVED") {
-              statusIconColor = "text-emerald-700";
-            } else if (status === "ATTEMPTED") {
-              statusIconColor = "text-orange-600";
-            }
+            // if (status === "TODO") {
+            //   statusIconColor = "text-primary";
+            // } else if (status === "SOLVED") {
+            //   statusIconColor = "text-emerald-700";
+            // } else if (status === "ATTEMPTED") {
+            //   statusIconColor = "text-orange-600";
+            // }
 
-            // Define colors statically
-            let difficultyTextColor = "";
+            // // Define colors statically
+            // let difficultyTextColor = "";
 
-            if (difficulty === "EASY") {
-              difficultyTextColor = "text-teal-700";
-            } else if (difficulty === "MEDIUM") {
-              difficultyTextColor = "text-yellow-700";
-            } else if (difficulty === "HARD") {
-              difficultyTextColor = "text-red-600";
-            }
+            // if (difficulty === "EASY") {
+            //   difficultyTextColor = "text-teal-700";
+            // } else if (difficulty === "MEDIUM") {
+            //   difficultyTextColor = "text-yellow-700";
+            // } else if (difficulty === "HARD") {
+            //   difficultyTextColor = "text-red-600";
+            // }
+
+            const statusIconColor = statusColors[status] || "";
+            const difficultyTextColor = difficultyColors[difficulty] || "";
 
             return (
               <div
