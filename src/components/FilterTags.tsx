@@ -57,7 +57,7 @@ export default function FilterTags({
   let statusColor = "";
 
   if (currentStatus === "TODO") {
-    statusColor = "text-blue-600";
+    statusColor = "text-primary";
   } else if (currentStatus === "SOLVED") {
     statusColor = "text-emerald-700";
   } else if (currentStatus === "ATTEMPTED") {

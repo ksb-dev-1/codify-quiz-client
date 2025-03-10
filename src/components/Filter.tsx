@@ -39,7 +39,15 @@ export default function Filter({
   const router = useRouter();
   const newParams = new URLSearchParams(searchParams.toString());
 
-  const isFilters = status || difficulty || topic ? true : false;
+  const isFilters =
+    status ||
+    difficulty ||
+    topic ||
+    currentStatus ||
+    currentDifficulty ||
+    currentTopic
+      ? true
+      : false;
 
   useEffect(() => {
     setStatus(currentStatus);

@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 
 // components
 import Container from "@/components/shared/Container";
+import Profile from "@/components/Profile";
 
 export const metadata: Metadata = {
   title: "Profile",
@@ -14,9 +15,20 @@ export const metadata: Metadata = {
 export default async function ProfilePage() {
   // Fetch the session and extract the user ID
   const session = await auth();
-  const userId = session?.user?.id;
+  let id, name, email, image;
 
-  if (!userId) redirect("/pages/signin");
+  if (session?.user) {
+    id = session.user.id || "";
+    name = session.user.name || "";
+    email = session.user.email || "";
+    image = session.user.image || "";
+  }
 
-  return <Container>Profile Page</Container>;
+  if (!id) redirect("/pages/signin");
+
+  return (
+    <Container>
+      <Profile userId={id} name={name} email={email} image={image} />
+    </Container>
+  );
 }
