@@ -86,16 +86,14 @@ export default function Filter({
         passedTopic={topic}
         setTopic={setTopic}
       />
-      <button
-        onClick={handleSubmit}
-        className={`mt-4 w-full flex items-center justify-center px-4 py-2 rounded-custom ${
-          !isFilters
-            ? "bg-[#999] cursor-not-allowed"
-            : "bg-primary hover:bg-hover"
-        } text-white  transition-colors`}
-      >
-        Apply Filters
-      </button>
+      {isFilters && (
+        <button
+          onClick={handleSubmit}
+          className="mt-4 w-full flex items-center justify-center px-4 py-2 rounded-custom bg-primary hover:bg-hover text-white  transition-colors"
+        >
+          Apply Filters
+        </button>
+      )}
     </>
   );
 }

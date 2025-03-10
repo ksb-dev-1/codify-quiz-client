@@ -63,9 +63,9 @@ export default function QuestionList({
         text="Questions"
         marginTop={isFilterApplied ? "mt-8" : ""}
       />
-      <div className="border-b rounded-custom">
+      <div className="">
         {questions.map(
-          ({ id, qNo, status, topicName, difficulty, isSaved }, index) => {
+          ({ id, qNo, status, topicName, difficulty, isSaved }) => {
             const StatusIcon = getStatusIcon(status);
 
             // Define colors statically
@@ -93,9 +93,7 @@ export default function QuestionList({
             return (
               <div
                 key={id}
-                className={`${
-                  index % 2 === 0 ? "" : "bg-slate-200"
-                } rounded-custom w-full p-4 sm:p-6 flex flex-row justify-between sm:justify-normal`}
+                className="border-b w-full p-4 sm:p-6 flex flex-row justify-between sm:justify-normal"
               >
                 <div className="w-full flex sm:items-center flex-col-reverse sm:flex-row justify-between sm:justify-normal">
                   {/* Status */}
@@ -113,7 +111,7 @@ export default function QuestionList({
                       <span className="mr-2">{qNo}.</span>
                       <Link
                         href={`/pages/questions/${id}`}
-                        className=" text-blue-600 underline"
+                        className="text-blue-700 underline"
                       >
                         {topicName}
                       </Link>

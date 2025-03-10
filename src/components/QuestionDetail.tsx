@@ -48,7 +48,8 @@ export default function QuestionDetail({
       queryClient.invalidateQueries({ queryKey: ["status"] });
       queryClient.invalidateQueries({ queryKey: ["question"] });
       queryClient.invalidateQueries({ queryKey: ["saved-questions"] });
-      toast.success("Question status set as attempted");
+      queryClient.invalidateQueries({ queryKey: ["question-count"] });
+      //toast.success("Question status set as attempted");
     },
     onError: () => toast.error("Failed to set status as attempted"),
   });
@@ -61,7 +62,8 @@ export default function QuestionDetail({
       queryClient.invalidateQueries({ queryKey: ["status"] });
       queryClient.invalidateQueries({ queryKey: ["question"] });
       queryClient.invalidateQueries({ queryKey: ["saved-questions"] });
-      toast.success("Question status set as solved");
+      queryClient.invalidateQueries({ queryKey: ["question-count"] });
+      //toast.success("Question status set as solved");
     },
     onError: () => toast.error("Failed to set status as attempted"),
   });

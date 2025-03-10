@@ -9,24 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // primary: "#001E2B",
-        //primary: "#333",
-        //primary: "#272C32",
-        primary: "#42484D",
+        primary: "#001E2B",
         hover: "#555",
       },
       backgroundColor: {
-        // primary: "#001E2B",
-        //primary: "#333",
-        //primary: "#272C32",
-        primary: "#42484D",
+        primary: "#001E2B",
         hover: "#555",
       },
       borderColor: {
         DEFAULT: "#cbd5e1", // Default border color
       },
       borderRadius: {
-        custom: "6px",
+        custom: "4px",
       },
       boxShadow: {
         // custom: "0 6px 12px rgba(30, 10, 58, 0.08)",

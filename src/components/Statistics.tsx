@@ -8,7 +8,7 @@ import {
 } from "recharts";
 
 // "#2563eb"
-const COLORS = ["#059669", "#d97706", "#42484D", "#2196F3"];
+const COLORS = ["#059669", "#d97706", "#001E2B", "#2196F3"];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Statistics({ data }: any) {
@@ -95,7 +95,18 @@ export default function Statistics({ data }: any) {
                     />
                   ))}
                 </Pie>
-                <Tooltip />
+                {/* <Tooltip /> */}
+                <Tooltip
+                  content={({ payload }) =>
+                    payload && payload.length ? (
+                      <div className="custom-tooltip">
+                        <p>
+                          {payload[0].name}: {payload[0].value}
+                        </p>
+                      </div>
+                    ) : null
+                  }
+                />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>

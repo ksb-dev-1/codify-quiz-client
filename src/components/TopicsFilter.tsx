@@ -49,7 +49,7 @@ export default function TopicsFilter({
         )}
 
         {/* Loading Skeleton */}
-        <div className="w-full flex items-center flex-wrap gap-2">
+        <div className="w-full grid grid-cols-2 gap-2">
           {topicsLoading &&
             Array.from({ length: 4 }).map((_, index) => (
               <span
@@ -85,6 +85,7 @@ export default function TopicsFilter({
           })}
           {topics.length > 3 && (
             <button
+              aria-label="toggle more / less topics"
               onClick={() => setMore(!more)}
               className="px-3 h-[35.4px] border rounded-custom hover:bg-slate-200 transition-colors"
             >

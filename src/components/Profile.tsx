@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 
+// lib
+import fetchQuestionCount from "@/lib/fetchQuestionCount";
+
 // components
 import Statistics from "@/components/Statistics";
 
@@ -10,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaCircleUser } from "react-icons/fa6";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import fetchQuestionCount from "@/lib/fetchQuestionCount";
+import { Loader2 } from "lucide-react";
 
 type ProfileProps = {
   userId: string;
@@ -26,15 +29,27 @@ export default function Profile({ userId, name, email, image }: ProfileProps) {
   });
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Loader2 className="animate-spin w-10 h-10" />
+      </div>
+    );
   }
 
   if (isError) {
-    return <p>Failed to fetch question count!</p>;
+    return (
+      <p className="text-center text-xl text-red-600">
+        Failed to fetch profile details!
+      </p>
+    );
   }
 
   if (!data) {
-    return <p>Data not found!</p>;
+    return (
+      <p className="text-center text-xl text-red-600">
+        Profile details not found!
+      </p>
+    );
   }
 
   return (

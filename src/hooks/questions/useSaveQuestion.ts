@@ -33,6 +33,7 @@ export const useSaveQuestion = (
       queryClient.invalidateQueries({ queryKey: ["saved-questions"] });
       queryClient.invalidateQueries({ queryKey: ["question", id] });
       queryClient.invalidateQueries({ queryKey: ["saved-status", id] });
+      queryClient.invalidateQueries({ queryKey: ["question-count"] });
     },
     onError: (error) => {
       toast.error(
