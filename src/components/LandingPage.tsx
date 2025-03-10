@@ -1,40 +1,13 @@
-"use client";
-
 import Link from "next/link";
 
 // components
 import Container from "@/components/shared/Container";
 
-// 3rd party
-import { useSession } from "next-auth/react";
-
-export default function LandingPage() {
-  const { data: session, status } = useSession();
-
-  const userId = session?.user?.id;
-
-  let startLearningButton: React.ReactNode;
-
-  if (status === "loading") {
-    startLearningButton = (
-      <Link
-        href="#"
-        className="skeleton text-transparent mb-8 px-8 py-3 rounded-custom"
-      >
-        Start Learning
-      </Link>
-    );
-  } else {
-    startLearningButton = (
-      <Link
-        href={userId ? "/pages/questions?page=1" : "/pages/signin"}
-        className="mb-8 bg-primary text-white px-8 py-3 rounded-custom hover:tracking-widest transition-all"
-      >
-        Start Learning
-      </Link>
-    );
-  }
-
+export default function LandingPage({
+  userId,
+}: {
+  userId: string | undefined;
+}) {
   return (
     <Container>
       <header className="flex flex-col items-center slide-in">
@@ -46,7 +19,12 @@ export default function LandingPage() {
           Your go to platform for learning javascript
         </p>
 
-        {startLearningButton}
+        <Link
+          href={userId ? "/pages/questions?page=1" : "/pages/signin"}
+          className="mb-8 bg-primary text-white px-8 py-3 rounded-custom hover:tracking-widest transition-all"
+        >
+          Start Learning
+        </Link>
       </header>
 
       <section className="mt-6 grid gap-8 sm:grid-cols-2 fade-in">

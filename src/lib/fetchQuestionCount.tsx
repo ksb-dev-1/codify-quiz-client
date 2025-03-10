@@ -1,6 +1,6 @@
-export default async function fetchQuestionCount(userId: string | undefined) {
+export default async function fetchQuestionCount(userId: string) {
   const queryParams = new URLSearchParams();
-  if (userId) queryParams.set("userId", userId);
+  queryParams.set("userId", userId);
 
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL

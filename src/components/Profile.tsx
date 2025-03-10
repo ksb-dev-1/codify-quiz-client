@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 // lib
@@ -11,38 +9,24 @@ import fetchQuestionCount from "@/lib/fetchQuestionCount";
 import Statistics from "@/components/Statistics";
 
 // 3rd party
-import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import { FaCircleUser } from "react-icons/fa6";
 import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Loader2 } from "lucide-react";
 
-export default function Profile() {
-  const { data: session, status } = useSession();
-  const userId = session?.user?.id;
-  const image = session?.user?.image;
-  const name = session?.user?.name;
-  const email = session?.user?.email;
+type ProfileProps = {
+  userId: string;
+  name: string | undefined;
+  email: string | undefined;
+  image: string | undefined;
+};
 
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status !== "loading" && !userId) router.push("/pages/signin");
-  }, [status, userId, router]);
-
+export default function Profile({ userId, name, email, image }: ProfileProps) {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["question-count", userId],
     queryFn: () => fetchQuestionCount(userId),
   });
-
-  if (status === "loading") {
-    return (
-      <div className="h-full flex items-center justify-center">
-        <Loader2 className="animate-spin w-10 h-10" />
-      </div>
-    );
-  }
 
   if (isLoading) {
     return (
@@ -91,8 +75,8 @@ export default function Profile() {
           </div>
         </div>
         <div className="mt-4">
-          {name && <p className="font-semibold text-xl">{name}</p>}
-          {email && <p>{email}</p>}
+          <p className="font-semibold text-xl">{name}</p>
+          <p>{email}</p>
         </div>
         <div className="absolute w-8 h-8 rounded-tr-custom rounded-bl-custom bg-red-600 text-white hover:bg-red-700 transition-colors top-0 right-0 cursor-pointer">
           <RiDeleteBin6Line className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
