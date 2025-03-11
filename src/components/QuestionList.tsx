@@ -60,7 +60,7 @@ export default function QuestionList({
   }
 
   return (
-    <div>
+    <div className="bg-white rounded-custom overflow-hidden">
       <QuestionsHeader
         text="Questions"
         marginTop={isFilterApplied ? "mt-8" : ""}

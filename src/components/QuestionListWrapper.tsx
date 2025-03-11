@@ -98,7 +98,7 @@ export default function QuestionListWrapper({
     <>
       <div className="w-full flex flex-col items-start">
         <div className="w-full flex items-start">
-          <div className="sticky top-[9rem] hidden md:flex flex-col items-start max-w-72 w-full mr-8 border rounded-custom p-6">
+          <div className="sticky top-[9rem] hidden md:flex flex-col items-start max-w-72 w-full mr-8 rounded-custom p-6 bg-white border">
             {/* Filter */}
             <Filter
               currentStatus={currentStatus}

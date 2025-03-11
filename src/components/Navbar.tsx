@@ -26,7 +26,7 @@ function NavbarWrapper({ children }: { children: React.ReactNode }) {
   return (
     <header
       ref={navbarRef}
-      className="fixed z-10 bg-white top-0 left-0 right-0 border-b flex justify-center h-[4.5rem]"
+      className="fixed z-10 bg-white top-0 left-0 right-0 flex justify-center h-[4.5rem] border-b"
     >
       <nav className="max-w-5xl w-full p-4 flex items-center justify-between">
         <Link

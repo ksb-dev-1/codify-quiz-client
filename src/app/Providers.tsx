@@ -14,8 +14,8 @@ import { Toaster } from "react-hot-toast";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // Cache remains fresh for 5 minutes
-      gcTime: 10 * 60 * 1000, // Cache stays in memory for 10 minutes
+      staleTime: Infinity, // Cache remains fresh for 5 minutes
+      gcTime: Infinity, // Cache stays in memory for 10 minutes
       // refetchOnWindowFocus: false, // Don't refetch when window refocuses
       // refetchOnMount: false, // Don't refetc
     },

@@ -64,7 +64,7 @@ export default function Statistics({ data }: any) {
   ];
 
   return (
-    <div className="mt-8 sm:mt-0 sm:ml-8 border rounded-custom p-8 w-full">
+    <div className="mt-8 sm:mt-0 sm:ml-8 bg-white border rounded-custom p-8 w-full">
       <p className="font-semibold text-xl mb-4">Statistics</p>
       <div className="grid lg:grid-cols-2 gap-8 sm:gap-16">
         {[
