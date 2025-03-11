@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 // constants
-import { getStatusIcon } from "@/constants/statuses";
+import { getStatusColor, getStatusIcon } from "@/constants/statuses";
 
 // types
 import { Question } from "@/types/types";
@@ -14,24 +14,14 @@ import fetchSavedQuestions from "@/lib/fetchSavedQuestions";
 // components
 import QuestionListSkeleton from "@/components/skeletons/QuestionListSkeleton";
 import QuestionsHeader from "@/components/shared/QuestionsHeader";
-import RemoveQuestionButton from "./RemoveQuestionButton";
+import ToggleSaveQuestionButton from "./ToggleSaveQuestionButton";
 
 // 3rd party
 import { useQuery } from "@tanstack/react-query";
-
-const statusColors = {
-  TODO: "text-primary",
-  SOLVED: "text-emerald-700",
-  ATTEMPTED: "text-orange-600",
-};
-
-const difficultyColors = {
-  EASY: "text-teal-700",
-  MEDIUM: "text-yellow-700",
-  HARD: "text-red-600",
-};
+import { getDifficultyColor } from "@/constants/difficulties";
 
 interface SavedQuestionListProps {
+  userId: string;
   savedQuestionsLoading: boolean;
   savedQuestionsError: boolean;
   savedQuestions: Question[];
@@ -51,6 +41,7 @@ export default function SavedQuestionListWrapper({
 
   return (
     <SavedQuestionList
+      userId={userId}
       savedQuestionsLoading={isLoading}
       savedQuestionsError={isError}
       savedQuestions={savedQuestions}
@@ -59,6 +50,7 @@ export default function SavedQuestionListWrapper({
 }
 
 function SavedQuestionList({
+  userId,
   savedQuestionsLoading,
   savedQuestionsError,
   savedQuestions,
@@ -87,30 +79,8 @@ function SavedQuestionList({
         {savedQuestions.map(({ id, qNo, status, topicName, difficulty }) => {
           const StatusIcon = getStatusIcon(status);
 
-          // // Define colors statically
-          // let statusIconColor = "";
-
-          // if (status === "TODO") {
-          //   statusIconColor = "text-primary";
-          // } else if (status === "SOLVED") {
-          //   statusIconColor = "text-emerald-700";
-          // } else if (status === "ATTEMPTED") {
-          //   statusIconColor = "text-orange-600";
-          // }
-
-          // // Define colors statically
-          // let difficultyTextColor = "";
-
-          // if (difficulty === "EASY") {
-          //   difficultyTextColor = "text-teal-700";
-          // } else if (difficulty === "MEDIUM") {
-          //   difficultyTextColor = "text-yellow-700";
-          // } else if (difficulty === "HARD") {
-          //   difficultyTextColor = "text-red-600";
-          // }
-
-          const statusIconColor = statusColors[status] || "";
-          const difficultyTextColor = difficultyColors[difficulty] || "";
+          const statusIconColor = getStatusColor(status);
+          const difficultyTextColor = getDifficultyColor(difficulty);
 
           return (
             <div
@@ -148,7 +118,13 @@ function SavedQuestionList({
                 </span>
 
                 <span className="sm:w-[calc(34.55px+2rem)] flex justify-end">
-                  <RemoveQuestionButton questionId={id} marginTop="mt-6" />
+                  {/* <RemoveQuestionButton questionId={id} marginTop="mt-6" /> */}
+                  <ToggleSaveQuestionButton
+                    userId={userId}
+                    questionId={id}
+                    marginTop="mt-6"
+                    isSaved={true}
+                  />
                 </span>
               </div>
             </div>

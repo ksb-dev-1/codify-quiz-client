@@ -72,7 +72,6 @@ export async function GET(req: NextRequest) {
       {
         success: true,
         savedQuestions: formattedSavedQuestions,
-        status: "success",
       },
       { status: 200 }
     );

@@ -11,10 +11,9 @@ import fetchQuestion from "@/lib/fetchQuestion";
 import changeQuestionStatus from "@/lib/changeQuestionStatus";
 
 // components
-import QuestionDetailSkeleton from "./skeletons/QuestionDetailSkeleton";
-import CodeSnippetRenderer from "./CodeSnippetRenderer";
-import SaveQuestionButton from "@/components/SaveQuestionButton";
-import RemoveQuestionButton from "@/components/RemoveQuestionButton";
+import QuestionDetailSkeleton from "@/components/skeletons/QuestionDetailSkeleton";
+import CodeSnippetRenderer from "@/components/CodeSnippetRenderer";
+import ToggleSaveQuestionButton from "@/components/ToggleSaveQuestionButton";
 
 // 3rd party
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -151,11 +150,11 @@ export default function QuestionDetail({
           <span className="ml-2">Back to Questions</span>
         </Link>
 
-        {isSaved ? (
-          <RemoveQuestionButton questionId={id} />
-        ) : (
-          <SaveQuestionButton questionId={id} />
-        )}
+        <ToggleSaveQuestionButton
+          userId={userId}
+          questionId={id}
+          isSaved={isSaved}
+        />
       </div>
 
       <div className="mt-4 border p-4 sm:p-8 rounded-custom">

@@ -12,7 +12,6 @@ export async function GET(
   try {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
-    // const questionId = searchParams.get("questionId");
     const { id } = await params;
 
     // Authorization check
@@ -23,7 +22,7 @@ export async function GET(
       );
     }
 
-    // Validate questionId
+    // Check questionId
     if (!id) {
       return NextResponse.json(
         { success: false, message: "Missing questionId" },

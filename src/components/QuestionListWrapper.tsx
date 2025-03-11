@@ -124,6 +124,7 @@ export default function QuestionListWrapper({
 
               {/* Question List*/}
               <QuestionList
+                userId={userId}
                 questionsLoading={questionsLoading}
                 questionsError={questionsError}
                 questions={questions}

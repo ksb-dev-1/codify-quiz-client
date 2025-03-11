@@ -3,7 +3,8 @@
 import Link from "next/link";
 
 // constants
-import { getStatusIcon } from "@/constants/statuses";
+import { getStatusColor, getStatusIcon } from "@/constants/statuses";
+import { getDifficultyColor } from "@/constants/difficulties";
 
 // types
 import { Question } from "@/types/types";
@@ -11,29 +12,18 @@ import { Question } from "@/types/types";
 // components
 import QuestionListSkeleton from "@/components/skeletons/QuestionListSkeleton";
 import QuestionsHeader from "@/components/shared/QuestionsHeader";
-import SaveQuestionButton from "@/components/SaveQuestionButton";
-import RemoveQuestionButton from "@/components/RemoveQuestionButton";
+import ToggleSaveQuestionButton from "./ToggleSaveQuestionButton";
 
 type QuestionListProps = {
+  userId: string;
   questionsLoading: boolean;
   questionsError: boolean;
   questions: Question[];
   isFilterApplied: boolean;
 };
 
-const statusColors = {
-  TODO: "text-primary",
-  SOLVED: "text-emerald-700",
-  ATTEMPTED: "text-orange-600",
-};
-
-const difficultyColors = {
-  EASY: "text-teal-700",
-  MEDIUM: "text-yellow-700",
-  HARD: "text-red-600",
-};
-
 export default function QuestionList({
+  userId,
   questionsLoading,
   questionsError,
   questions,
@@ -80,30 +70,8 @@ export default function QuestionList({
           ({ id, qNo, status, topicName, difficulty, isSaved }) => {
             const StatusIcon = getStatusIcon(status);
 
-            // Define colors statically
-            // let statusIconColor = "";
-
-            // if (status === "TODO") {
-            //   statusIconColor = "text-primary";
-            // } else if (status === "SOLVED") {
-            //   statusIconColor = "text-emerald-700";
-            // } else if (status === "ATTEMPTED") {
-            //   statusIconColor = "text-orange-600";
-            // }
-
-            // // Define colors statically
-            // let difficultyTextColor = "";
-
-            // if (difficulty === "EASY") {
-            //   difficultyTextColor = "text-teal-700";
-            // } else if (difficulty === "MEDIUM") {
-            //   difficultyTextColor = "text-yellow-700";
-            // } else if (difficulty === "HARD") {
-            //   difficultyTextColor = "text-red-600";
-            // }
-
-            const statusIconColor = statusColors[status] || "";
-            const difficultyTextColor = difficultyColors[difficulty] || "";
+            const statusIconColor = getStatusColor(status);
+            const difficultyTextColor = getDifficultyColor(difficulty);
 
             return (
               <div
@@ -144,11 +112,17 @@ export default function QuestionList({
                   </span>
 
                   <span className="sm:w-[calc(34.55px+2rem)] flex justify-end">
-                    {isSaved ? (
+                    {/* {isSaved ? (
                       <RemoveQuestionButton questionId={id} marginTop="mt-6" />
                     ) : (
                       <SaveQuestionButton questionId={id} marginTop="mt-6" />
-                    )}
+                    )} */}
+                    <ToggleSaveQuestionButton
+                      userId={userId}
+                      questionId={id}
+                      marginTop="mt-6"
+                      isSaved={isSaved}
+                    />
                   </span>
                 </div>
               </div>
