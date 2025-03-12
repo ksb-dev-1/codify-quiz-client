@@ -1,10 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
+    const session = await auth();
+    const userId = session?.user?.id;
+    // const { searchParams } = new URL(req.url);
+    // const userId = searchParams.get("userId");
 
     if (!userId) {
       return NextResponse.json(

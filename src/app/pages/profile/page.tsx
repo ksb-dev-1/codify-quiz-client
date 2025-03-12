@@ -28,7 +28,7 @@ export default async function ProfilePage() {
 
   return (
     <Container>
-      <Profile userId={id} name={name} email={email} image={image} />
+      <Profile name={name} email={email} image={image} />
     </Container>
   );
 }

@@ -1,14 +1,5 @@
-export default async function fetchQuestion(
-  userId: string,
-  questionId: string
-) {
-  const queryParams = new URLSearchParams();
-
-  queryParams.set("userId", userId);
-
-  const url = `${
-    process.env.NEXT_PUBLIC_BASE_URL
-  }/api/questions/${questionId}?${queryParams.toString()}`;
+export default async function fetchQuestion(questionId: string) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/questions/${questionId}`;
 
   const res = await fetch(url, {
     method: "GET",

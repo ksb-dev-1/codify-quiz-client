@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Constants
-import { statuses, getStatusIcon } from "@/constants/statuses";
+import { statuses, getStatusIcon, getStatusColor } from "@/constants/statuses";
 
 // 3rd party
 import { IoIosCheckmark } from "react-icons/io";
@@ -35,16 +35,7 @@ export default function StatusFilter({
 
           const StatusIcon = getStatusIcon(status);
 
-          // Define colors statically
-          let statusIconColor = "";
-
-          if (status === "TODO") {
-            statusIconColor = "text-primary";
-          } else if (status === "SOLVED") {
-            statusIconColor = "text-emerald-700";
-          } else if (status === "ATTEMPTED") {
-            statusIconColor = "text-orange-600";
-          }
+          const statusIconColor = getStatusColor(status);
 
           return (
             <button
@@ -54,11 +45,11 @@ export default function StatusFilter({
               className="flex items-center cursor-pointer hover:underline rounded-custom"
             >
               {passedStatus === status ? (
-                <span className="relative w-5 h-5 bg-primary text-white rounded-full mr-4">
+                <span className="relative w-5 h-5 bg-primary text-white rounded-custom mr-4">
                   <IoIosCheckmark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
                 </span>
               ) : (
-                <span className="w-5 h-5 border rounded-full mr-4"></span>
+                <span className="w-5 h-5 border border-slate-400 rounded-custom mr-4"></span>
               )}
 
               <span className="capitalize">

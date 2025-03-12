@@ -29,7 +29,6 @@ export default async function QuestionsPageWrapper({
   return (
     <Container>
       <QuestionListWrapper
-        userId={userId}
         currentPage={page}
         currentStatus={status}
         currentDifficulty={difficulty}

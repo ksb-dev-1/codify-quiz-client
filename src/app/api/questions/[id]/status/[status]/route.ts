@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 import { QuestionStatusEnum } from "@prisma/client";
 
 export async function POST(
@@ -11,8 +12,10 @@ export async function POST(
   }
 ) {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
+    const session = await auth();
+    const userId = session?.user?.id;
+    // const { searchParams } = new URL(req.url);
+    // const userId = searchParams.get("userId");
     const { id, status } = await params;
 
     // Authorization check

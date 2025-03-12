@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
+    const session = await auth();
+    const userId = session?.user?.id;
+
+    // const { searchParams } = new URL(req.url);
+    // const userId = searchParams.get("userId");
 
     if (!userId) {
       return NextResponse.json(
@@ -122,13 +126,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       length: paginatedQuestions.length,
     });
   } catch (error) {
-    console.error("Failed to fetch questions:", error);
+    console.error("Failed to upload profile image:", error);
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
       {
         success: false,
-        message: "Failed to fetch questions",
+        message: "Failed to upload profile image",
         error: errorMessage,
       },
       { status: 500 }

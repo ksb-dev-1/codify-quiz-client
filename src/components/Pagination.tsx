@@ -56,7 +56,7 @@ const Pagination = ({
             disabled={currentPage === 1}
             className={`${
               currentPage === 1
-                ? "cursor-not-allowed text-[#999]"
+                ? "cursor-not-allowed bg-[#999] text-white"
                 : "cursor-pointer bg-primary border-primary text-white hover:bg-hover transition-colors"
             } border px-4 py-2 mr-1 rounded-custom`}
           >
@@ -69,7 +69,7 @@ const Pagination = ({
               className={`${
                 currentPage === visiblePage
                   ? "cursor-pointer bg-primary border-primary text-white hover:bg-hover"
-                  : "hover:bg-slate-200"
+                  : "bg-white hover:bg-slate-200"
               } border px-4 py-2 mx-1 rounded-custom transition-colors`}
             >
               {visiblePage}
@@ -80,7 +80,7 @@ const Pagination = ({
             disabled={currentPage === totalPages}
             className={`${
               currentPage === totalPages
-                ? "cursor-not-allowed text-[#999]"
+                ? "cursor-not-allowed bg-[#999] text-white"
                 : "cursor-pointer bg-primary border-primary text-white hover:bg-hover transition-colors"
             } border px-4 py-2 ml-1 rounded-custom`}
           >

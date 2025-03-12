@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Constants
-import { difficulties } from "@/constants/difficulties";
+import { difficulties, getDifficultyColor } from "@/constants/difficulties";
 
 // 3rd party
 import { IoIosCheckmark } from "react-icons/io";
@@ -36,15 +36,7 @@ export default function DifficultyFilter({
           newParams.set("page", "1");
 
           // Define colors statically
-          let difficultyTextColor = "";
-
-          if (difficulty === "EASY") {
-            difficultyTextColor = "text-teal-700";
-          } else if (difficulty === "MEDIUM") {
-            difficultyTextColor = "text-yellow-700";
-          } else if (difficulty === "HARD") {
-            difficultyTextColor = "text-red-600";
-          }
+          const difficultyTextColor = getDifficultyColor(difficulty);
 
           return (
             <button
@@ -54,11 +46,11 @@ export default function DifficultyFilter({
               className="flex items-center cursor-pointer hover:underline rounded-custom"
             >
               {passedDifficulty === difficulty ? (
-                <span className="relative w-5 h-5 bg-primary text-white rounded-full mr-4">
+                <span className="relative w-5 h-5 bg-primary text-white rounded-custom mr-4">
                   <IoIosCheckmark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
                 </span>
               ) : (
-                <span className="w-5 h-5 border rounded-full mr-4"></span>
+                <span className="w-5 h-5 border border-slate-400 rounded-custom mr-4"></span>
               )}
 
               <span className={difficultyTextColor}>

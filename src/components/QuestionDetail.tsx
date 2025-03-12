@@ -16,32 +16,26 @@ import CodeSnippetRenderer from "@/components/CodeSnippetRenderer";
 import ToggleSaveQuestionButton from "@/components/ToggleSaveQuestionButton";
 
 // 3rd party
+import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IoArrowBackOutline } from "react-icons/io5";
-import toast from "react-hot-toast";
 import { GrCheckbox, GrCheckboxSelected, GrPowerReset } from "react-icons/gr";
 import { QuestionStatusEnum } from "@prisma/client";
 
-export default function QuestionDetail({
-  userId,
-  questionId,
-}: {
-  userId: string;
-  questionId: string;
-}) {
+export default function QuestionDetail({ questionId }: { questionId: string }) {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["question", userId, questionId],
-    queryFn: () => fetchQuestion(userId, questionId),
+    queryKey: ["question", questionId],
+    queryFn: () => fetchQuestion(questionId),
   });
 
   // Mark question status as attempted
   const markStatusAsAttemptedMutation = useMutation({
-    mutationFn: () => changeQuestionStatus(userId, questionId, "ATTEMPTED"),
+    mutationFn: () => changeQuestionStatus(questionId, "ATTEMPTED"),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["questions"] });
       queryClient.invalidateQueries({ queryKey: ["status"] });
@@ -53,9 +47,9 @@ export default function QuestionDetail({
     onError: () => toast.error("Failed to set status as attempted"),
   });
 
-  // Mark question status as attempted
+  // Mark question status as solved
   const markStatusAsSolvedMutation = useMutation({
-    mutationFn: () => changeQuestionStatus(userId, questionId, "SOLVED"),
+    mutationFn: () => changeQuestionStatus(questionId, "SOLVED"),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["questions"] });
       queryClient.invalidateQueries({ queryKey: ["status"] });
@@ -150,11 +144,7 @@ export default function QuestionDetail({
           <span className="ml-2">Back to Questions</span>
         </Link>
 
-        <ToggleSaveQuestionButton
-          userId={userId}
-          questionId={id}
-          isSaved={isSaved}
-        />
+        <ToggleSaveQuestionButton questionId={id} isSaved={isSaved} />
       </div>
 
       <div className="mt-4 border p-4 sm:p-8 rounded-custom">

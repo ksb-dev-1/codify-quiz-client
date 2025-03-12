@@ -27,7 +27,7 @@ export default async function QuestionDetailPage({
 
   return (
     <Container>
-      <QuestionDetail userId={userId} questionId={id} />
+      <QuestionDetail questionId={id} />
     </Container>
   );
 }

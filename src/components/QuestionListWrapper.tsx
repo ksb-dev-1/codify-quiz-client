@@ -19,16 +19,14 @@ import Pagination from "@/components/Pagination";
 import { useQueries } from "@tanstack/react-query";
 import { IoFilter } from "react-icons/io5";
 
-interface QuestionsProps {
-  userId: string;
+type QuestionsProps = {
   currentPage: string | undefined;
   currentStatus: string | undefined;
   currentDifficulty: string | undefined;
   currentTopic: string | undefined;
-}
+};
 
 export default function QuestionListWrapper({
-  userId,
   currentPage,
   currentStatus,
   currentDifficulty,
@@ -59,7 +57,7 @@ export default function QuestionListWrapper({
       {
         queryKey: [
           "questions",
-          userId,
+
           currentPage,
           currentStatus,
           currentDifficulty,
@@ -67,7 +65,6 @@ export default function QuestionListWrapper({
         ],
         queryFn: () =>
           fetchQuestions(
-            userId,
             currentPage,
             currentStatus,
             currentDifficulty,
@@ -75,8 +72,8 @@ export default function QuestionListWrapper({
           ),
       },
       {
-        queryKey: ["topics", userId],
-        queryFn: () => fetchTopics(userId),
+        queryKey: ["topics"],
+        queryFn: fetchTopics,
       },
     ],
   });
@@ -124,7 +121,6 @@ export default function QuestionListWrapper({
 
               {/* Question List*/}
               <QuestionList
-                userId={userId}
                 questionsLoading={questionsLoading}
                 questionsError={questionsError}
                 questions={questions}
@@ -143,7 +139,7 @@ export default function QuestionListWrapper({
           </div>
         </div>
       </div>
-      {/* Filter button for small screen */}
+      {/* Filter button for smaller screen */}
       <button
         onClick={() => setIsFilterOpen(true)}
         className="fixed bottom-8 right-8 px-4 py-2 bg-primary border-2 border-white text-white rounded-custom flex md:hidden items-center hover:bg-hover transition-colors"

@@ -22,7 +22,7 @@ export default async function SavedPage() {
 
   return (
     <Container>
-      <SavedQuestionList userId={userId} />
+      <SavedQuestionList />
     </Container>
   );
 }

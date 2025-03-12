@@ -1,10 +1,5 @@
-export default async function fetchTopics(userId: string) {
-  const queryParams = new URLSearchParams();
-  queryParams.set("userId", userId);
-
-  const url = `${
-    process.env.NEXT_PUBLIC_BASE_URL
-  }/api/topics?${queryParams.toString()}`;
+export default async function fetchTopics() {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`;
 
   const res = await fetch(url, {
     method: "GET",

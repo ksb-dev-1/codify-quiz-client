@@ -21,27 +21,21 @@ import { useQuery } from "@tanstack/react-query";
 import { getDifficultyColor } from "@/constants/difficulties";
 
 interface SavedQuestionListProps {
-  userId: string;
   savedQuestionsLoading: boolean;
   savedQuestionsError: boolean;
   savedQuestions: Question[];
 }
 
-export default function SavedQuestionListWrapper({
-  userId,
-}: {
-  userId: string;
-}) {
+export default function SavedQuestionListWrapper() {
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["saved-questions", userId],
-    queryFn: () => fetchSavedQuestions(userId),
+    queryKey: ["saved-questions"],
+    queryFn: fetchSavedQuestions,
   });
 
   const savedQuestions = data?.savedQuestions || [];
 
   return (
     <SavedQuestionList
-      userId={userId}
       savedQuestionsLoading={isLoading}
       savedQuestionsError={isError}
       savedQuestions={savedQuestions}
@@ -50,7 +44,6 @@ export default function SavedQuestionListWrapper({
 }
 
 function SavedQuestionList({
-  userId,
   savedQuestionsLoading,
   savedQuestionsError,
   savedQuestions,
@@ -75,7 +68,7 @@ function SavedQuestionList({
   return (
     <div>
       <QuestionsHeader text="Saved Questions" />
-      <div>
+      <div className="bg-white rounded-custom">
         {savedQuestions.map(({ id, qNo, status, topicName, difficulty }) => {
           const StatusIcon = getStatusIcon(status);
 
@@ -120,7 +113,6 @@ function SavedQuestionList({
                 <span className="sm:w-[calc(34.55px+2rem)] flex justify-end">
                   {/* <RemoveQuestionButton questionId={id} marginTop="mt-6" /> */}
                   <ToggleSaveQuestionButton
-                    userId={userId}
                     questionId={id}
                     marginTop="mt-6"
                     isSaved={true}

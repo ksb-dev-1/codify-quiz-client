@@ -1,10 +1,5 @@
-export default async function fetchQuestionCount(userId: string) {
-  const queryParams = new URLSearchParams();
-  queryParams.set("userId", userId);
-
-  const url = `${
-    process.env.NEXT_PUBLIC_BASE_URL
-  }/api/questions/count?${queryParams.toString()}`;
+export default async function fetchQuestionCount() {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/questions/count`;
 
   const res = await fetch(url, {
     method: "GET",

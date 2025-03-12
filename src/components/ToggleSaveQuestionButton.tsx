@@ -10,12 +10,10 @@ import { Loader } from "lucide-react";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 
 export default function ToggleSaveQuestionButton({
-  userId,
   questionId,
   marginTop,
   isSaved,
 }: {
-  userId: string;
   questionId: string;
   marginTop?: string;
   isSaved: boolean;
@@ -24,7 +22,7 @@ export default function ToggleSaveQuestionButton({
 
   const toggleSaveQuestionMutation = useMutation({
     mutationFn: async () => {
-      return toggleSaveQuestion(userId, questionId); // Get response instead of throwing
+      return toggleSaveQuestion(questionId); // Get response instead of throwing
     },
     onSuccess: (response) => {
       if (response.success) {

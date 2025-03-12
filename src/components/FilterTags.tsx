@@ -89,7 +89,7 @@ export default function FilterTags({
       <div className="flex items-center flex-wrap gap-4">
         {/* Render status if found */}
         {currentStatus && (
-          <div className="flex items-center px-3 py-1 transition-colors border rounded-custom">
+          <div className="flex items-center px-3 py-1 bg-white border rounded-custom">
             {StatusIcon && (
               <StatusIcon className={`sm:text-xl ${statusColor}`} />
             )}
@@ -103,7 +103,7 @@ export default function FilterTags({
 
         {/* Render difficulty if found */}
         {currentDifficulty && (
-          <div className="flex items-center px-3 py-1 border rounded-custom">
+          <div className="flex items-center px-3 py-1 bg-white border rounded-custom">
             <span className={`${difficultyTextColor} mr-2`}>
               {currentDifficulty.charAt(0) +
                 currentDifficulty.substring(1).toLocaleLowerCase()}
@@ -115,7 +115,7 @@ export default function FilterTags({
 
         {/* Render topic if found */}
         {currentTopic && (
-          <div className="flex items-center px-3 py-1 border rounded-custom">
+          <div className="flex items-center px-3 py-1 bg-white border rounded-custom">
             <span className="mr-2">{currentTopic}</span>
             <RemoveFilterButton filter="topic" />
           </div>

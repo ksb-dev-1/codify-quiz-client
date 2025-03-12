@@ -16,6 +16,9 @@ import { IoClose } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { FaCircleUser } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
+// import { MdOutlineFormatListNumbered } from "react-icons/md";
+import { PiListNumbers } from "react-icons/pi";
+import { VscHeart } from "react-icons/vsc";
 
 function NavbarWrapper({ children }: { children: React.ReactNode }) {
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -84,9 +87,9 @@ export default function Navbar() {
           <span className="skeleton text-transparent px-4 py-2 rounded-custom mx-4">
             Bookmarks
           </span>
-          <span className="skeleton text-transparent px-4 py-2 rounded-custom">
+          {/* <span className="skeleton text-transparent px-4 py-2 rounded-custom">
             Premium
-          </span>
+          </span> */}
         </div>
 
         <div className="hidden sm:flex skeleton h-10 w-10 rounded-full"></div>
@@ -108,7 +111,7 @@ export default function Navbar() {
                   : "border-b-2 border-transparent"
               } h-[72px] hover:bg-slate-200 px-6 transition-colors`}
             >
-              Questions
+              <PiListNumbers className="mr-2 text-xl" /> Questions
             </Link>
             <Link
               href="/pages/saved"
@@ -118,9 +121,9 @@ export default function Navbar() {
                   : "border-b-2 border-transparent"
               } h-[72px] hover:bg-slate-200 px-6 transition-colors`}
             >
-              Saved
+              <VscHeart className="mr-2 text-xl" /> Saved
             </Link>
-            <Link
+            {/* <Link
               href="#"
               className={`flex items-center justify-center ${
                 path === "premium"
@@ -129,7 +132,7 @@ export default function Navbar() {
               } h-[72px] hover:bg-slate-200 px-6 transition-colors`}
             >
               Premium
-            </Link>
+            </Link> */}
           </div>
 
           <div ref={profileRef} className="hidden sm:block relative ml-8">
@@ -139,13 +142,13 @@ export default function Navbar() {
                 alt="image"
                 height={40}
                 width={40}
-                className="cursor-pointer rounded-full object-cover"
+                className="cursor-pointer rounded-custom object-cover"
                 onClick={() => setIsOpen((prev) => !prev)}
               />
             ) : (
               <div
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="relative h-[35px] w-[35px] rounded-full bg-primary text-white hover:bg-hover transition-colors cursor-pointer"
+                className="relative h-[35px] w-[35px] rounded-custom bg-primary text-white hover:bg-hover transition-colors cursor-pointer"
               >
                 <FaCircleUser className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl" />
               </div>
@@ -214,36 +217,36 @@ export default function Navbar() {
                 <Link
                   href="/pages/questions?page=1"
                   onClick={() => setIsSideNavOpen(false)}
-                  className="w-full px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
+                  className="w-full flex items-center px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
                 >
-                  Questions
+                  <PiListNumbers className="mr-4" /> Questions
                 </Link>
                 <Link
                   href="/pages/saved"
                   onClick={() => setIsSideNavOpen(false)}
-                  className="w-full px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
+                  className="w-full flex items-center px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
                 >
-                  Saved
+                  <VscHeart className="mr-4" /> Saved
                 </Link>
-                <Link
+                {/* <Link
                   href="#"
                   onClick={() => setIsSideNavOpen(false)}
                   className="w-full px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
                 >
                   Premium
-                </Link>
+                </Link> */}
                 <Link
                   href="/pages/profile"
                   onClick={() => setIsSideNavOpen(false)}
-                  className="w-full px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
+                  className="w-full flex items-center px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
                 >
-                  Profile
+                  <FaRegUser className="mr-4" /> Profile
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="text-start w-full px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
+                  className="text-start w-full flex items-center px-4 py-2 rounded-custom hover:bg-slate-200 transition-colors"
                 >
-                  Logout
+                  <FiLogOut className="mr-4" /> Logout
                 </button>
               </div>
             </div>

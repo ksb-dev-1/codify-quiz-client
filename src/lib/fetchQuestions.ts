@@ -1,5 +1,4 @@
 export default async function fetchQuestions(
-  userId: string,
   currentPage: string | undefined,
   currentStatus: string | undefined,
   currentDifficulty: string | undefined,
@@ -11,7 +10,6 @@ export default async function fetchQuestions(
   if (currentDifficulty) queryParams.set("difficulty", currentDifficulty);
   if (currentStatus) queryParams.set("status", currentStatus);
   queryParams.set("page", currentPage?.toString() || "1");
-  queryParams.set("userId", userId);
 
   const url = `${
     process.env.NEXT_PUBLIC_BASE_URL

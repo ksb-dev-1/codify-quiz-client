@@ -15,7 +15,6 @@ import QuestionsHeader from "@/components/shared/QuestionsHeader";
 import ToggleSaveQuestionButton from "./ToggleSaveQuestionButton";
 
 type QuestionListProps = {
-  userId: string;
   questionsLoading: boolean;
   questionsError: boolean;
   questions: Question[];
@@ -23,7 +22,6 @@ type QuestionListProps = {
 };
 
 export default function QuestionList({
-  userId,
   questionsLoading,
   questionsError,
   questions,
@@ -60,12 +58,12 @@ export default function QuestionList({
   }
 
   return (
-    <div className="bg-white rounded-custom overflow-hidden">
+    <div>
       <QuestionsHeader
         text="Questions"
         marginTop={isFilterApplied ? "mt-8" : ""}
       />
-      <div className="">
+      <div className="bg-white rounded-custom">
         {questions.map(
           ({ id, qNo, status, topicName, difficulty, isSaved }) => {
             const StatusIcon = getStatusIcon(status);
@@ -112,13 +110,7 @@ export default function QuestionList({
                   </span>
 
                   <span className="sm:w-[calc(34.55px+2rem)] flex justify-end">
-                    {/* {isSaved ? (
-                      <RemoveQuestionButton questionId={id} marginTop="mt-6" />
-                    ) : (
-                      <SaveQuestionButton questionId={id} marginTop="mt-6" />
-                    )} */}
                     <ToggleSaveQuestionButton
-                      userId={userId}
                       questionId={id}
                       marginTop="mt-6"
                       isSaved={isSaved}
