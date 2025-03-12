@@ -1,5 +1,6 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 
 // constants
@@ -15,6 +16,7 @@ import QuestionsHeader from "@/components/shared/QuestionsHeader";
 import ToggleSaveQuestionButton from "./ToggleSaveQuestionButton";
 
 type QuestionListProps = {
+  setIsFilterOpen: Dispatch<SetStateAction<boolean>>;
   questionsLoading: boolean;
   questionsError: boolean;
   questions: Question[];
@@ -22,6 +24,7 @@ type QuestionListProps = {
 };
 
 export default function QuestionList({
+  setIsFilterOpen,
   questionsLoading,
   questionsError,
   questions,
@@ -62,6 +65,7 @@ export default function QuestionList({
       <QuestionsHeader
         text="Questions"
         marginTop={isFilterApplied ? "mt-8" : ""}
+        setIsFilterOpen={setIsFilterOpen}
       />
       <div className="bg-white rounded-custom">
         {questions.map(
@@ -81,7 +85,7 @@ export default function QuestionList({
                   <span className="sm:w-[calc(42.85px+2rem)] flex items-center">
                     {StatusIcon && (
                       <StatusIcon
-                        className={`text-xl mr-2 ${statusIconColor}`}
+                        className={`text-2xl sm:text-xl mr-2 ${statusIconColor}`}
                       />
                     )}
                   </span>

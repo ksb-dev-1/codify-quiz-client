@@ -17,7 +17,6 @@ import Pagination from "@/components/Pagination";
 
 // 3rd party
 import { useQueries } from "@tanstack/react-query";
-import { IoFilter } from "react-icons/io5";
 
 type QuestionsProps = {
   currentPage: string | undefined;
@@ -121,6 +120,7 @@ export default function QuestionListWrapper({
 
               {/* Question List*/}
               <QuestionList
+                setIsFilterOpen={setIsFilterOpen}
                 questionsLoading={questionsLoading}
                 questionsError={questionsError}
                 questions={questions}
@@ -139,14 +139,6 @@ export default function QuestionListWrapper({
           </div>
         </div>
       </div>
-      {/* Filter button for smaller screen */}
-      <button
-        onClick={() => setIsFilterOpen(true)}
-        className="fixed bottom-8 right-8 px-4 py-2 bg-primary border-2 border-white text-white rounded-custom flex md:hidden items-center hover:bg-hover transition-colors"
-      >
-        <IoFilter className="mr-2 text-xl" />
-        <span>Filter</span>
-      </button>
 
       {/* Filter for smaller screen */}
       <div

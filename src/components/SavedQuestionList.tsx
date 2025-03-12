@@ -49,7 +49,7 @@ function SavedQuestionList({
   savedQuestions,
 }: SavedQuestionListProps) {
   if (savedQuestionsLoading) {
-    return <QuestionListSkeleton text="Saved Questions" />;
+    return <QuestionListSkeleton text="Saved Questions" marginTop="mt-0" />;
   }
 
   if (savedQuestionsError) {
@@ -84,7 +84,9 @@ function SavedQuestionList({
                 {/* Status */}
                 <span className="sm:w-[calc(42.85px+2rem)] flex items-center">
                   {StatusIcon && (
-                    <StatusIcon className={`text-xl mr-2 ${statusIconColor}`} />
+                    <StatusIcon
+                      className={`text-2xl sm:text-xl mr-2 ${statusIconColor}`}
+                    />
                   )}
                 </span>
 
