@@ -19,7 +19,7 @@ export default function QuestionsHeader({
         {setIsFilterOpen && (
           <button
             onClick={() => setIsFilterOpen(true)}
-            className="px-3 py-1 border rounded-custom mb-4 flex md:hidden hover:bg-slate-200 items-center transition-colors"
+            className="px-4 py-2 border rounded-custom mb-4 flex md:hidden hover:bg-slate-200 items-center transition-colors"
           >
             <RiFilter3Fill className="mr-2 text-xl" />
             <span>Filter</span>

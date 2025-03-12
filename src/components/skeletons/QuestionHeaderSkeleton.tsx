@@ -1,18 +1,25 @@
+import { RiFilter3Fill } from "react-icons/ri";
+
 export default function QuestionHeaderSkeleton({
   text,
   marginTop,
+  isSavedPage,
 }: {
   text: string;
   marginTop?: string;
+  isSavedPage?: boolean;
 }) {
   return (
     <div className={marginTop}>
       <div className="w-full flex items-center justify-between sm:justify-end">
-        <h1 className="flex sm:hidden font-semibold text-xl mb-4">{text}</h1>
+        <h1 className="flex sm:hidden text-xl mb-4">{text}</h1>
 
-        <button className="skeleton text-transparent px-4 py-2 mb-4 border border-transparent rounded-custom flex md:hidden">
-          <span>Filter</span>
-        </button>
+        {!isSavedPage && (
+          <button className="skeleton text-transparent px-4 py-2 mb-4 border border-transparent rounded-custom flex md:hidden items-center">
+            <RiFilter3Fill className="mr-2 text-xl" />
+            <span>Filter</span>
+          </button>
+        )}
       </div>
       <div className="w-full flex items-center justify-between sm:justify-normal px-4 sm:px-6 py-2 sm:py-3 rounded-custom border-primary bg-primary text-white">
         <div className="w-full flex flex-col-reverse sm:flex-row sm:items-center justify-between sm:justify-normal">

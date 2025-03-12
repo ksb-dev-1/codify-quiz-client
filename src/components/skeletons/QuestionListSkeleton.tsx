@@ -3,13 +3,19 @@ import QuestionHeaderSkeleton from "./QuestionHeaderSkeleton";
 export default function QuestionListSkeleton({
   text,
   marginTop,
+  isSavedPage,
 }: {
   text: string;
   marginTop?: string;
+  isSavedPage?: boolean;
 }) {
   return (
     <div>
-      <QuestionHeaderSkeleton text={text} marginTop={marginTop} />
+      <QuestionHeaderSkeleton
+        text={text}
+        marginTop={marginTop}
+        isSavedPage={isSavedPage}
+      />
       <div>
         {Array.from({ length: 10 }).map((_, index) => (
           <div

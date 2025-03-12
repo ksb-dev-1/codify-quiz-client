@@ -49,7 +49,13 @@ function SavedQuestionList({
   savedQuestions,
 }: SavedQuestionListProps) {
   if (savedQuestionsLoading) {
-    return <QuestionListSkeleton text="Saved Questions" marginTop="mt-0" />;
+    return (
+      <QuestionListSkeleton
+        text="Saved Questions"
+        marginTop="mt-0"
+        isSavedPage={true}
+      />
+    );
   }
 
   if (savedQuestionsError) {
