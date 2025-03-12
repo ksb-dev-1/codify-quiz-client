@@ -5,7 +5,7 @@ export default function CodeSnippetRenderer({ code }: { code: string }) {
   return (
     <Highlight code={code} language="javascript" theme={themes.vsDark}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={`${className} p-8 h-fit`} style={style}>
+        <pre className={`${className} p-8 h-fit overflow-x-auto`} style={style}>
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line })}>
               {line.map((token, key) => (
