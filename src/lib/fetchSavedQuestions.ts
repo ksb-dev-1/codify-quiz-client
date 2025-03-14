@@ -1,16 +1,27 @@
-export default async function fetchQuestions() {
+export default async function fetchSavedQuestions() {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/questions/saved`;
 
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch saved questions");
+    const data = await res.json(); // Parse response JSON
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to fetch saved questions.",
+      };
+    }
+
+    return data; // Return API response directly
+  } catch (error) {
+    console.error("Error fetching saved questions:", error);
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
   }
-
-  return res.json();
 }

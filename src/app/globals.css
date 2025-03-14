@@ -15,6 +15,7 @@ body {
   color: #001E2B;
   /* background: #f1f5f9; */
   /* background-color: #e2e8f0; */
+  user-select: none;
 }
 
 /* Remove arrows in Chrome, Safari, Edge, and Opera */

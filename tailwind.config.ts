@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#001E2B",
-        hover: "#555",
+        hover: "#333",
       },
       backgroundColor: {
         primary: "#001E2B",
-        hover: "#555",
+        hover: "#333",
       },
       borderColor: {
         DEFAULT: "#cbd5e1", // Default border color

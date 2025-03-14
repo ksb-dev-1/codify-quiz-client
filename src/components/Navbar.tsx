@@ -137,14 +137,16 @@ export default function Navbar() {
 
           <div ref={profileRef} className="hidden sm:block relative ml-8">
             {session.user.image ? (
-              <Image
-                src={session.user.image}
-                alt="image"
-                height={40}
-                width={40}
-                className="cursor-pointer rounded-custom object-cover"
-                onClick={() => setIsOpen((prev) => !prev)}
-              />
+              <div className="relative h-[40px] w-[40px] rounded-custom overflow-hidden border">
+                <Image
+                  src={session.user.image}
+                  alt="image"
+                  height={40}
+                  width={40}
+                  className="cursor-pointer rounded-custom object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                  onClick={() => setIsOpen((prev) => !prev)}
+                />
+              </div>
             ) : (
               <div
                 onClick={() => setIsOpen((prev) => !prev)}
@@ -187,7 +189,7 @@ export default function Navbar() {
         <div
           className={`${
             isSideNavOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-          } transition-opacity duration-300 fixed top-0 left-0 right-0 bottom-0 bg-[rgb(0,30,43,0.5)] z-20`}
+          } transition-opacity fixed top-0 left-0 right-0 bottom-0 bg-[rgb(0,30,43,0.5)] z-20`}
         >
           {/* Close Button */}
           <div className="absolute top-4 right-4 h-10 w-10 rounded-custom cursor-pointer bg-primary text-white hover:bg-hover transition-colors">
@@ -201,7 +203,7 @@ export default function Navbar() {
             ref={sideNavRef}
             className={`${
               isSideNavOpen ? "translate-x-0" : "-translate-x-[100%]"
-            } absolute top-0 left-0 bottom-0 w-52 bg-white transition-transform duration-300 z-30`}
+            } transition-transform duration-300 absolute top-0 left-0 bottom-0 w-52 bg-white z-30`}
           >
             <div className="flex flex-col h-full">
               <div className="w-full border-b h-[72px] flex items-center justify-start pl-4">

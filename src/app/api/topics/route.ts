@@ -2,14 +2,10 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
-// export const dynamic = 'force-static';
-
 export async function GET(): Promise<NextResponse> {
   try {
     const session = await auth();
     const userId = session?.user?.id;
-    // const { searchParams } = new URL(req.url);
-    // const userId = searchParams.get("userId");
 
     if (!userId) {
       return NextResponse.json(

@@ -6,19 +6,30 @@ export default async function changeQuestionStatus(
 ) {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/questions/${questionId}/status/${status}`;
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  if (!response.ok) {
-    const jsonResponse = await response.json();
-    throw new Error(
-      jsonResponse.message || "Failed to set status as attempted."
-    );
+    const data = await response.json(); // Parse response JSON
+
+    if (!response.ok) {
+      // Return API error message instead of throwing a generic error
+      return {
+        success: false,
+        message: data.message || "Failed to update status.",
+      };
+    }
+
+    return data; // Return API response directly
+  } catch (error) {
+    console.error("Error updating question status:", error);
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
   }
-
-  return response.json();
 }

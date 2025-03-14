@@ -6,8 +6,6 @@ export async function GET() {
   try {
     const session = await auth();
     const userId = session?.user?.id;
-    // const { searchParams } = new URL(req.url);
-    // const userId = searchParams.get("userId");
 
     if (!userId) {
       return NextResponse.json(

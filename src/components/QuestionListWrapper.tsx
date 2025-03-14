@@ -150,7 +150,7 @@ export default function QuestionListWrapper({
           ref={filterRef}
           className={`${
             isFilterOpen ? "translate-y-0" : "translate-y-[100%]"
-          } bg-white rounded-custom p-8 transition-transform duration-300`}
+          } transition-transform duration-300 bg-white rounded-custom p-8`}
         >
           <Filter
             currentStatus={currentStatus}

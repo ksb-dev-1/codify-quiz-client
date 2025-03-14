@@ -1,16 +1,27 @@
 export default async function fetchQuestionCount() {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/questions/count`;
 
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch question count");
+    const data = await res.json(); // Parse response JSON
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to fetch question count.",
+      };
+    }
+
+    return data; // Return API response directly
+  } catch (error) {
+    console.error("Error fetching question count:", error);
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
   }
-
-  return res.json();
 }

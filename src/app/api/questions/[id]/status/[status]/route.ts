@@ -14,8 +14,6 @@ export async function POST(
   try {
     const session = await auth();
     const userId = session?.user?.id;
-    // const { searchParams } = new URL(req.url);
-    // const userId = searchParams.get("userId");
     const { id, status } = await params;
 
     // Authorization check

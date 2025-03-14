@@ -15,20 +15,21 @@ export const metadata: Metadata = {
 export default async function ProfilePage() {
   // Fetch the session and extract the user ID
   const session = await auth();
-  let id, name, email, image;
+  // let id, name, email, image;
+  const userId = session?.user?.id;
 
-  if (session?.user) {
-    id = session.user.id || "";
-    name = session.user.name || "";
-    email = session.user.email || "";
-    image = session.user.image || "";
-  }
+  // if (session?.user) {
+  //   id = session.user.id || "";
+  //   name = session.user.name || "";
+  //   email = session.user.email || "";
+  //   image = session.user.image || "";
+  // }
 
-  if (!id) redirect("/pages/signin");
+  if (!userId) redirect("/pages/signin");
 
   return (
     <Container>
-      <Profile name={name} email={email} image={image} />
+      <Profile />
     </Container>
   );
 }

@@ -1,9 +1,9 @@
-export default async function fetchTopics() {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`;
+export default async function deleteAccount() {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/delete`;
 
   try {
     const res = await fetch(url, {
-      method: "GET",
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
 
@@ -12,13 +12,13 @@ export default async function fetchTopics() {
     if (!res.ok) {
       return {
         success: false,
-        message: data.message || "Failed to fetch topics.",
+        message: data.message || "Failed to delete account.",
       };
     }
 
     return data;
   } catch (error) {
-    console.error("Error fetching topics:", error);
+    console.error("Error deleting account:", error);
     return {
       success: false,
       message: "Something went wrong. Please try again.",

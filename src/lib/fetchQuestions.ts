@@ -1,8 +1,8 @@
 export default async function fetchQuestions(
-  currentPage: string | undefined,
-  currentStatus: string | undefined,
-  currentDifficulty: string | undefined,
-  currentTopic: string | undefined
+  currentPage?: string,
+  currentStatus?: string,
+  currentDifficulty?: string,
+  currentTopic?: string
 ) {
   const queryParams = new URLSearchParams();
 
@@ -15,16 +15,27 @@ export default async function fetchQuestions(
     process.env.NEXT_PUBLIC_BASE_URL
   }/api/questions?${queryParams.toString()}`;
 
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch questions");
+    const data = await res.json(); // Parse response JSON
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message || "Failed to fetch questions.",
+      };
+    }
+
+    return data; // Return API response directly
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
   }
-
-  return res.json();
 }
