@@ -169,14 +169,14 @@ export default function QuestionDetail({ questionId }: { questionId: string }) {
                 : "cursor-not-allowed";
 
             if (status === "SOLVED" && key === correctOption) {
-              bgColor = "bg-emerald-600 text-white cursor-not-allowed";
+              bgColor = "bg-emerald-700 text-white cursor-not-allowed";
             }
 
             if (submitted) {
               if (key === selectedOption) {
                 bgColor =
                   selectedOption === correctOption
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-emerald-700 text-white"
                     : "bg-red-600 text-white";
               }
             } else if (key === selectedOption) {
@@ -209,9 +209,9 @@ export default function QuestionDetail({ questionId }: { questionId: string }) {
             ) : (
               <button
                 onClick={handleUnmarkAsCompleted}
-                className="mt-8 flex items-center hover:text-green-600 transition-colors"
+                className="mt-8 flex items-center hover:text-emerald-700 transition-colors"
               >
-                <GrCheckboxSelected className="text-green-600 w-5 h-5 mr-2" />
+                <GrCheckboxSelected className="text-emerald-700 w-5 h-5 mr-2" />
                 <span>Uncheck as completed</span>
               </button>
             )}
@@ -239,9 +239,9 @@ export default function QuestionDetail({ questionId }: { questionId: string }) {
                 ) : (
                   <button
                     onClick={handleMarkAsCompleted}
-                    className="flex items-center hover:text-green-600 transition-colors"
+                    className="flex items-center hover:text-emerald-700 transition-colors"
                   >
-                    <GrCheckbox className="text-green-600 w-5 h-5 mr-2" />
+                    <GrCheckbox className="text-emerald-700 w-5 h-5 mr-2" />
                     <span>Check as completed</span>
                   </button>
                 )}
@@ -260,7 +260,7 @@ export default function QuestionDetail({ questionId }: { questionId: string }) {
         )}
 
         {status === "SOLVED" && explanation && (
-          <div className="mt-8 bg-green-100 border border-green-600 rounded-custom p-4 sm:p-8 text-green-600">
+          <div className="mt-8 bg-green-100 border border-emerald-700 rounded-custom p-4 sm:p-8 text-emerald-700">
             <p className="font-semibold mb-2 text-xl">Explanation</p>
             <p>{explanation}</p>
           </div>

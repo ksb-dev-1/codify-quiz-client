@@ -81,6 +81,7 @@ export default function Statistics({ data }: any) {
                   data={chart.data}
                   dataKey="value"
                   nameKey="name"
+                  aria-label="name"
                   cx="50%"
                   cy="50%"
                   innerRadius={65}
